@@ -1,0 +1,33 @@
+.task {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-6) var(--pad) var(--s-5);
+  padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom));
+}
+
+.task__text {
+  /* Vertically centred in the space left over above the controls. */
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  width: 90%;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--type-task);
+  line-height: 1.15;
+  text-align: left;
+  color: var(--ink);
+  /* A nine-word task must never need a scroll or clip a descender. */
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+.task__controls { display: flex; flex-direction: column; gap: var(--s-2); }
+
+/* Small phones: the 40px task text is the one thing that may shrink, and only
+   after the controls and padding have taken what they need. */
+@media (max-height: 600px) {
+  .task__text { font-size: 32px; }
+}
