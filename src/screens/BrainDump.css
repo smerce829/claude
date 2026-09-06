@@ -1,0 +1,2 @@
+.bd__count { margin: 0; font-size: var(--type-small); color: var(--ink-muted); }
+.bd__warn { margin: 0; font-size: var(--type-body); color: var(--danger); }

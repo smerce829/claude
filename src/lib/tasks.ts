@@ -42,3 +42,19 @@ export function braindumpPool(state: State, energy: Energy, duration: Duration):
     room: 'any',
   }))
 }
+
+/** Rooms that have enough tasks to sequence a reset. */
+export const ROOMS = ['kitchen', 'bathroom', 'bedroom', 'living room', 'entryway', 'laundry']
+
+/**
+ * A sequenced set for one room: shortest tasks first, so the set front-loads
+ * finished work. The timer runs across the whole set, not per task, and the
+ * set is never padded to fill the time — running out is the end.
+ */
+export function roomSet(room: string, profile: State['profile']): Task[] {
+  return TASKS
+    .filter((t) => t.room === room)
+    .filter((t) => !t.requires || t.requires.every((r) =>
+      r === 'kids' ? profile.kids : r === 'pets' ? profile.pets : profile.worksFromHome))
+    .sort((a, b) => a.duration - b.duration)
+}

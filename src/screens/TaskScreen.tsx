@@ -10,7 +10,7 @@ import './TaskScreen.css'
  */
 export function TaskScreen(
   { task, fraction, onDone, onSwap }:
-  { task: Task; fraction: number; onDone: () => void; onSwap: () => void },
+  { task: Task; fraction: number; onDone: () => void; onSwap?: () => void },
 ) {
   return (
     <>
@@ -19,7 +19,8 @@ export function TaskScreen(
         <p className="task__text">{task.text}</p>
         <div className="task__controls">
           <PrimaryButton onClick={onDone}>done</PrimaryButton>
-          <SecondaryAction onClick={onSwap}>not this one</SecondaryAction>
+          {/* A room reset has a fixed sequence, so there is nothing to swap to. */}
+          {onSwap && <SecondaryAction onClick={onSwap}>not this one</SecondaryAction>}
         </div>
       </main>
     </>

@@ -1,0 +1,18 @@
+.dp__count {
+  margin: 0;
+  font-size: var(--type-small);
+  color: var(--ink-muted);
+}
+
+.dp__refused {
+  margin: 0;
+  font-size: var(--type-body);
+  color: var(--danger);
+}
+
+/* 2x2. Equal weight, because none of the four is the right answer. */
+.dp__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2);
+}

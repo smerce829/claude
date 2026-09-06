@@ -9,10 +9,15 @@ function fresh(): State {
     profile: { home: null, kids: false, pets: false, worksFromHome: false },
     session: { lastTaskIds: [], completedToday: 0, lastCompletedDate: null },
     rooms: {},
-    doompile: { items: [], deferred: [], deferredCap: 10 },
+    doompile: { name: null, items: [], deferred: [], deferredCap: 10 },
     payday: { cycle: null, bills: [], lastRun: null },
-    braindump: { inbox: [], today: [], thisWeek: [] },
-    meta: { version: SCHEMA_VERSION, createdAt: Date.now(), installPromptShown: false },
+    braindump: { inbox: [], today: [], thisWeek: [], todayDate: null },
+    meta: {
+      version: SCHEMA_VERSION,
+      createdAt: Date.now(),
+      installPromptShown: false,
+      neverWarningShown: false,
+    },
   }
 }
 

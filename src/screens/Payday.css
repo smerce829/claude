@@ -1,0 +1,39 @@
+.pd__cycle {
+  margin: 0;
+  font-size: var(--type-small);
+  color: var(--ink-muted);
+}
+
+.pd__hint { margin: 0; font-size: var(--type-small); color: var(--ink-muted); }
+
+.pd__list { flex: 1; display: flex; flex-direction: column; }
+
+.pd__bill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  width: 100%;
+  min-height: var(--target);
+  padding: var(--s-3) 0;
+  font-size: var(--type-body);
+  color: var(--ink);
+  text-align: left;
+  /* Dividers instead of card edges. */
+  border-bottom: 1px solid var(--line);
+}
+.pd__bill:first-child { border-top: 1px solid var(--line); }
+
+.pd__name { flex: 1; min-width: 0; overflow-wrap: break-word; }
+.pd__bill--paid .pd__name { color: var(--ink-muted); }
+
+.pd__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  /* Ink or ink-muted only. Never coloured. */
+  color: var(--ink);
+}

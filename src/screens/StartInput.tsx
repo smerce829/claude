@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChoiceTile } from '../components/Controls'
+import { ChoiceTile, SecondaryAction } from '../components/Controls'
 import type { Duration, Energy } from '../lib/types'
 import './StartInput.css'
 
@@ -18,7 +18,9 @@ const TIME: Array<{ v: Duration; label: string }> = [
  * Nothing on screen but the two rows — no header, no nav, no logo.
  * No confirm button: selecting the second value fires immediately.
  */
-export function StartInput({ onStart }: { onStart: (e: Energy, d: Duration) => void }) {
+export function StartInput(
+  { onStart, onElse }: { onStart: (e: Energy, d: Duration) => void; onElse: () => void },
+) {
   const [energy, setEnergy] = useState<Energy | null>(null)
   const [time, setTime] = useState<Duration | null>(null)
 
@@ -52,6 +54,11 @@ export function StartInput({ onStart }: { onStart: (e: Energy, d: Duration) => v
           ))}
         </div>
       </div>
+
+      {/* The only way to reach the other four modules. Section 7.1 keeps this
+          screen bare, and section 9 forbids a home screen, so this is one
+          secondary action rather than a nav bar. */}
+      <SecondaryAction onClick={onElse}>something else</SecondaryAction>
     </main>
   )
 }

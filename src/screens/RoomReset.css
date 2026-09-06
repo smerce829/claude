@@ -1,0 +1,28 @@
+.rr__group { display: flex; flex-direction: column; gap: var(--s-3); }
+
+.rr__label {
+  margin: 0;
+  font-size: var(--type-small);
+  color: var(--ink-muted);
+}
+
+.rr__rooms { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+
+.rr__room {
+  min-height: var(--target);
+  padding: 0 var(--s-3);
+  border-radius: var(--radius);
+  border: 1px solid var(--ink-muted);
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--type-control);
+  font-weight: 600;
+  transition: background-color var(--t-state) ease-out;
+}
+.rr__room--selected {
+  background: var(--purple);
+  color: var(--ink-on-purple);
+  border-color: var(--purple);
+}
+
+.rr__times { display: flex; gap: var(--s-3); }
