@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { InstallPrompt } from './components/InstallPrompt'
-import { Header } from './components/Chrome'
-import { Dock } from './components/Dock'
 import { SecondaryAction } from './components/Controls'
 import { BrainDump, BrainDumpSort } from './screens/BrainDump'
 import { Complete } from './screens/Complete'
-import { DoomPileAdd, DoomPileName, DoomPileRun } from './screens/DoomPile'
+import { DoomPileAdd, DoomPileName, DoomPileReview, DoomPileRun } from './screens/DoomPile'
 import { Gate } from './screens/Gate'
+import { Menu } from './screens/Menu'
 import { Payday } from './screens/Payday'
 import { Profile } from './screens/Profile'
 import { RoomReset } from './screens/RoomReset'
@@ -14,9 +13,8 @@ import { Settings } from './screens/Settings'
 import { StartInput } from './screens/StartInput'
 import { TaskScreen } from './screens/TaskScreen'
 import { importJSON, load, save, saveNow } from './lib/storage'
-import { shouldReset } from './lib/payday'
-import { advanceStreak, liveStreak } from './lib/streak'
-import { braindumpPool, microTasks, pickTask, roomSet } from './lib/tasks'
+import { advanceCycles } from './lib/payday'
+import { brainDumpText, isBrainDumpTask, nextUntagged, pickTask, roomSet } from './lib/tasks'
 import { useTimer } from './lib/timer'
 import type { Duration, Energy, ResetDuration, State, Task } from './lib/types'
 import type { Screen } from './lib/types.nav'
@@ -42,24 +40,16 @@ export function App() {
   useEffect(() => { save(state) }, [state])
 
   useEffect(() => {
-    const root = document.documentElement
-    if (state.ui.lowEnergy) root.setAttribute('data-energy', 'low')
-    else root.removeAttribute('data-energy')
-  }, [state.ui.lowEnergy])
-
-  useEffect(() => {
     const flush = () => saveNow(state)
     window.addEventListener('pagehide', flush)
     return () => window.removeEventListener('pagehide', flush)
   }, [state])
 
-  // Bills clear themselves once the cycle date comes round again.
+  // Roll the pay cycle forward on open. Bills that were due and left
+  // unchecked carry over rather than silently resetting.
   useEffect(() => {
-    if (!shouldReset(state.payday)) return
-    setState((s) => ({
-      ...s,
-      payday: { ...s.payday, bills: s.payday.bills.map((b) => ({ ...b, paid: false })), lastRun: Date.now() },
-    }))
+    const next = advanceCycles(state.payday)
+    if (next.changed) setState((s) => ({ ...s, payday: next.payday }))
   }, [state.payday])
 
   // Items triaged to "today" belong to that day only.
@@ -70,7 +60,7 @@ export function App() {
     }
   }, [state.braindump.todayDate, state.braindump.today.length])
 
-  const { fraction, expired, remaining } = useTimer(startedAt, durationMs)
+  const { fraction, expired } = useTimer(startedAt, durationMs)
 
   useEffect(() => {
     if (!expired) return
@@ -82,9 +72,13 @@ export function App() {
 
   /* ---------------- Start Button ---------------- */
 
+  /** `skipped` holds brain-dump items passed over with "not this one". */
+  const skipped = useRef<string[]>([])
+
   const serve = useCallback((energy: Energy, duration: Duration, restart: boolean) => {
-    const extra = braindumpPool(state, energy, duration)
-    const next = pickTask(energy, duration, state.profile, state.session.lastTaskIds, extra)
+    const next =
+      nextUntagged(state.braindump.today, energy, duration, skipped.current) ??
+      pickTask(energy, duration, state.profile, state.session.lastTaskIds)
     if (!next) return
     setTask(next)
     setState((s) => ({
@@ -97,21 +91,47 @@ export function App() {
 
   const onStart = (energy: Energy, duration: Duration) => {
     choice.current = { energy, duration }
+    skipped.current = []
     serve(energy, duration, true)
   }
-  const onSwap = () => { const c = choice.current; if (c) serve(c.energy, c.duration, false) }
 
-  const countCompleted = () => {
-    setState((s) => ({ ...s, session: advanceStreak(s.session) }))
+  // Passing on a brain-dump item moves to the next one before the library.
+  const onSwap = () => {
+    if (task && isBrainDumpTask(task)) skipped.current = [...skipped.current, brainDumpText(task)]
+    const c = choice.current
+    if (c) serve(c.energy, c.duration, false)
   }
 
-  const onDone = () => { countCompleted(); setStartedAt(null); setScreen('complete') }
+  const countCompleted = () => {
+    const today = new Date().toDateString()
+    setState((s) => ({
+      ...s,
+      session: {
+        ...s.session,
+        completedToday: s.session.lastCompletedDate === today ? s.session.completedToday + 1 : 1,
+        lastCompletedDate: today,
+      },
+    }))
+  }
+
+  const onDone = () => {
+    if (task && isBrainDumpTask(task)) {
+      const text = brainDumpText(task)
+      setState((s) => ({
+        ...s,
+        braindump: { ...s.braindump, today: s.braindump.today.filter((t) => t !== text) },
+      }))
+    }
+    countCompleted()
+    setStartedAt(null)
+    setScreen('complete')
+  }
   const onAgain = () => { setTask(null); setStartedAt(null); setScreen('start') }
 
   /* ---------------- Room Reset ---------------- */
 
   const startRoom = (room: string, minutes: ResetDuration) => {
-    const s = roomSet(room, state.profile)
+    const s = roomSet(room, minutes)
     if (s.length === 0) return
     setSet(s); setStep(0)
     setDurationMs(minutes * 60_000)
@@ -170,12 +190,24 @@ export function App() {
 
   const toStart = () => setScreen('start')
 
-  const streak = liveStreak(state.session)
-  const micro = useMemo(() => microTasks(state.profile), [state.profile])
+  /* Data-loss nudge. All state lives only in this browser, so a long gap
+     since the last export with real data on board earns one offer per
+     session — skippable, never blocking. */
+  const FOURTEEN_DAYS = 14 * 86_400_000
+  const hasData =
+    state.doompile.items.length > 0 ||
+    state.braindump.inbox.length > 0 ||
+    state.payday.bills.length > 0
+  const staleExport =
+    state.meta.lastExportAt === null
+      ? Date.now() - state.meta.createdAt >= FOURTEEN_DAYS
+      : Date.now() - state.meta.lastExportAt >= FOURTEEN_DAYS
+  const nudgeBackup = hasData && staleExport && !state.meta.backupNudgeShown
 
-  /* The gate and the one-time profile question run before the app chrome
-     exists, so neither shows the header or the dock. */
-  const chrome = screen !== 'gate' && screen !== 'profile'
+  const takeBackup = () => {
+    setState((s) => ({ ...s, meta: { ...s.meta, backupNudgeShown: true } }))
+    setScreen('settings')
+  }
 
   const canPromptInstall = useMemo(
     () => (screen === 'complete' || screen === 'room-done') &&
@@ -185,15 +217,6 @@ export function App() {
 
   return (
     <>
-      {chrome && (
-        <Header
-          lowEnergy={state.ui.lowEnergy}
-          streak={streak}
-          onToggle={() => setState((s) => ({ ...s, ui: { ...s.ui, lowEnergy: !s.ui.lowEnergy } }))}
-          onSettings={() => setScreen('settings')}
-        />
-      )}
-
       {screen === 'gate' && (
         <Gate onValid={(key) => {
           setState((s) => ({ ...s, license: { key, validatedAt: Date.now() } }))
@@ -213,36 +236,36 @@ export function App() {
       )}
 
       {screen === 'start' && (
-        <StartInput
-          onStart={onStart}
-          lowEnergy={state.ui.lowEnergy}
-          micro={micro}
-          onMicro={(t) => { setTask(t); setDurationMs(5 * 60_000); setStartedAt(Date.now()); setScreen('task') }}
-        />
+        <StartInput onStart={onStart} onElse={() => setScreen('menu')} />
       )}
 
       {screen === 'task' && task && (
-        <TaskScreen task={task} fraction={fraction} remainingMs={remaining} onDone={onDone} onSwap={onSwap} />
+        <TaskScreen task={task} fraction={fraction} onDone={onDone} onSwap={onSwap} />
       )}
 
-      {screen === 'complete' && <Complete onAgain={onAgain} streak={streak} />}
+      {screen === 'complete' && <Complete onAgain={onAgain} nudgeBackup={nudgeBackup} onBackup={takeBackup} />}
 
+      {screen === 'menu' && (
+        <Menu onGo={(s) => setScreen(s)} onBack={toStart} />
+      )}
 
-      {screen === 'room' && <RoomReset onStart={startRoom} onBack={toStart} />}
+      {screen === 'room' && <RoomReset onStart={startRoom} onBack={() => setScreen('menu')} />}
 
       {screen === 'room-run' && set[step] && (
-        <TaskScreen task={set[step]} fraction={fraction} remainingMs={remaining} onDone={nextInSet} />
+        <TaskScreen task={set[step]} fraction={fraction} onDone={nextInSet} />
       )}
 
-      {screen === 'room-done' && <Complete onAgain={toStart} streak={streak} />}
+      {screen === 'room-done' && <Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} />}
 
       {screen === 'doompile' && (
         <DoomPileName
+          deferredCount={state.doompile.deferred.length}
+          onReview={() => setScreen('doompile-review')}
           onNamed={(name) => {
             setState((s) => ({ ...s, doompile: { ...s.doompile, name, items: [] } }))
             setScreen('doompile-add')
           }}
-          onBack={toStart}
+          onBack={() => setScreen('menu')}
         />
       )}
 
@@ -261,24 +284,66 @@ export function App() {
           item={state.doompile.items[0]}
           deferredFull={state.doompile.deferred.length >= state.doompile.deferredCap}
           onDecide={decide}
-          onBack={toStart}
+          onBack={() => setScreen('menu')}
         />
       )}
 
-      {screen === 'doompile-done' && <Complete onAgain={toStart} streak={streak} />}
+      {screen === 'doompile-review' && state.doompile.deferred[0] && (
+        <DoomPileReview
+          item={state.doompile.deferred[0]}
+          remaining={state.doompile.deferred.length}
+          onDecide={() => {
+            // Any of the three resolves the item and frees a slot.
+            setState((s) => ({
+              ...s,
+              doompile: { ...s.doompile, deferred: s.doompile.deferred.slice(1) },
+            }))
+            if (state.doompile.deferred.length <= 1) setScreen('doompile')
+          }}
+          onBack={() => setScreen('doompile')}
+        />
+      )}
+
+      {screen === 'doompile-done' && <Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} />}
 
       {screen === 'payday' && (
         <Payday
-          cycle={state.payday.cycle}
-          bills={state.payday.bills}
-          onSetCycle={(day) => setState((s) => ({ ...s, payday: { ...s.payday, cycle: day, lastRun: Date.now() } }))}
-          onToggle={(i) => setState((s) => ({
-            ...s,
-            payday: { ...s.payday, bills: s.payday.bills.map((b, j) => j === i ? { ...b, paid: !b.paid } : b) },
+          payday={state.payday}
+          onSetCycle={(day) => setState((s) => ({
+            ...s, payday: { ...s.payday, cycle: day, lastRun: Date.now() },
           }))}
-          onAdd={(name) => setState((s) => ({ ...s, payday: { ...s.payday, bills: [...s.payday.bills, { name, paid: false }] } }))}
-          onRemove={(i) => setState((s) => ({ ...s, payday: { ...s.payday, bills: s.payday.bills.filter((_, j) => j !== i) } }))}
-          onBack={toStart}
+          onToggle={(name) => setState((s) => ({
+            ...s,
+            payday: {
+              ...s.payday,
+              bills: s.payday.bills.map((b) => b.name === name ? { ...b, checked: !b.checked } : b),
+              // Checking a carried bill clears it from the pinned list.
+              carryover: s.payday.bills.some((b) => b.name === name && !b.checked)
+                ? s.payday.carryover.filter((n) => n !== name)
+                : s.payday.carryover,
+            },
+          }))}
+          onAdd={(name, frequency, months) => setState((s) => ({
+            ...s,
+            payday: {
+              ...s.payday,
+              bills: [...s.payday.bills, {
+                name, frequency, months,
+                anchorDay: s.payday.cycle ?? 1,
+                anchorCycle: s.payday.cycleIndex,
+                checked: false,
+              }],
+            },
+          }))}
+          onRemove={(name) => setState((s) => ({
+            ...s,
+            payday: {
+              ...s.payday,
+              bills: s.payday.bills.filter((b) => b.name !== name),
+              carryover: s.payday.carryover.filter((n) => n !== name),
+            },
+          }))}
+          onBack={() => setScreen('menu')}
         />
       )}
 
@@ -287,7 +352,7 @@ export function App() {
           inbox={state.braindump.inbox}
           onAdd={(t) => setState((s) => ({ ...s, braindump: { ...s.braindump, inbox: [...s.braindump.inbox, t] } }))}
           onSort={() => setScreen('braindump-sort')}
-          onBack={toStart}
+          onBack={() => setScreen('menu')}
         />
       )}
 
@@ -297,24 +362,23 @@ export function App() {
           warnNever={!state.meta.neverWarningShown}
           onSort={sortItem}
           onAckWarning={() => setState((s) => ({ ...s, meta: { ...s.meta, neverWarningShown: true } }))}
-          onBack={toStart}
+          onBack={() => setScreen('menu')}
         />
       )}
 
-      {screen === 'braindump-done' && <Complete onAgain={toStart} streak={streak} />}
+      {screen === 'braindump-done' && <Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} />}
 
       {screen === 'settings' && (
         <Settings
           state={state}
+          onExported={() => setState((s) => ({ ...s, meta: { ...s.meta, lastExportAt: Date.now() } }))}
           onImport={(text) => {
             try { setState(importJSON(text)); setScreen('start') }
             catch { /* Malformed file. Keep what is already here. */ }
           }}
-          onBack={toStart}
+          onBack={() => setScreen('menu')}
         />
       )}
-
-      {chrome && <Dock screen={screen} onGo={(t) => setScreen(t)} />}
 
       {canPromptInstall && (
         <InstallPrompt

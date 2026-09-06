@@ -1,97 +1,75 @@
 .pd__cycle {
   margin: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-muted);
+  font-size: var(--type-small);
+  color: var(--ink-muted);
 }
-.pd__cycle strong { color: var(--text); font-weight: 800; }
 
-.pd__list { flex: 1; display: flex; flex-direction: column; gap: var(--s-2); }
+.pd__hint { margin: 0; font-size: var(--type-small); color: var(--ink-muted); }
+
+.pd__list { flex: 1; display: flex; flex-direction: column; }
 
 .pd__bill {
   display: flex;
   align-items: center;
   gap: var(--s-2);
-  padding: var(--s-2) var(--s-3);
-  border-radius: var(--r);
-  background: var(--glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--hairline);
-  transition: border-color var(--t), background-color var(--t);
+  width: 100%;
+  min-height: var(--target);
+  padding: var(--s-3) 0;
+  font-size: var(--type-body);
+  color: var(--ink);
+  /* Dividers instead of card edges. */
+  border-bottom: 1px solid var(--line);
 }
-.pd__bill--paid { border-color: color-mix(in srgb, var(--emerald) 40%, transparent); }
+.pd__bill:first-child { border-top: 1px solid var(--line); }
 
+.pd__name { flex: 1; min-width: 0; overflow-wrap: break-word; }
+.pd__bill--paid .pd__name { color: var(--ink-muted); }
+
+.pd__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  /* Ink or ink-muted only. Never coloured. */
+  color: var(--ink);
+}
+
+.pd__suggest { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+.pd__chip {
+  min-height: var(--target);
+  padding: 0 var(--s-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--ink-muted);
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--type-body);
+}
+
+/* The row is two controls: tick it off, or take it off the list. */
 .pd__tick {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--s-3);
   flex: 1;
   min-width: 0;
-  min-height: 48px;
+  min-height: var(--target);
   text-align: left;
-  font-size: 16px;
-  font-weight: 600;
+  color: inherit;
 }
-
-.pd__box {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 28px; height: 28px;
-  flex: none;
-  border-radius: 9px;
-  border: 2px solid var(--edge);
-  color: var(--on-accent);
-  transition: background-color var(--t), border-color var(--t), transform var(--t);
-}
-.pd__bill--paid .pd__box {
-  background: var(--emerald);
-  border-color: var(--emerald);
-  animation: pop 320ms var(--ease);
-}
-
-/* Burst: a ring that scales out once on completion. */
-.pd__bill--paid .pd__box::after {
-  content: '';
-  position: absolute;
-  inset: -6px;
-  border-radius: 14px;
-  border: 2px solid var(--emerald);
-  animation: burst 520ms var(--ease) forwards;
-  pointer-events: none;
-}
-@keyframes pop   { 40% { transform: scale(1.22); } }
-@keyframes burst { to { opacity: 0; transform: scale(1.9); } }
-
-.pd__name {
-  flex: 1;
-  min-width: 0;
-  overflow-wrap: break-word;
-  transition: color var(--t);
-}
-/* Strikethrough draws itself rather than appearing. */
-.pd__name { background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat; background-position: 0 55%;
-  background-size: 0% 2px; transition: background-size 320ms var(--ease), color var(--t); }
-.pd__bill--paid .pd__name { color: var(--text-muted); background-size: 100% 2px; }
 
 .pd__remove {
-  display: grid; place-items: center;
-  width: 44px; height: 44px; flex: none;
-  border-radius: var(--r-sm);
-  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--target);
+  min-height: var(--target);
+  flex: none;
+  color: var(--ink-muted);
 }
-.pd__remove:active { background: rgba(255,255,255,0.07); color: var(--rose); }
 
-.pd__suggest { display: flex; flex-wrap: wrap; gap: var(--s-2); }
-.pd__chip {
-  min-height: 44px;
-  padding: 0 var(--s-4);
-  border-radius: var(--r-pill);
-  border: 1px solid var(--edge);
-  background: rgba(255,255,255,0.05);
-  color: var(--text);
-  font-size: 14px; font-weight: 600;
-}
-.pd__chip:active { border-color: var(--cyan-bright); color: var(--cyan-bright); }
+.pd__freq { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+.pd__freq .tile { height: 72px; min-height: 72px; }

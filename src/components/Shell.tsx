@@ -1,16 +1,20 @@
 import { ChevronLeft } from 'lucide-react'
 import './Shell.css'
 
+/**
+ * Back is one of the two icons allowed to stand without a text label
+ * (section 6.5). Nothing else sits in this row — no title bar, no logo.
+ */
 export function Back({ onBack }: { onBack: () => void }) {
   return (
     <button className="back" onClick={onBack} aria-label="Back">
-      <ChevronLeft size={22} strokeWidth={2.4} aria-hidden="true" />
+      <ChevronLeft size={24} strokeWidth={2} aria-hidden="true" />
     </button>
   )
 }
 
 export function ScreenTitle({ children }: { children: React.ReactNode }) {
-  return <h1 className="title">{children}</h1>
+  return <h1 className="screen-title">{children}</h1>
 }
 
 export function TextInput(
@@ -19,7 +23,7 @@ export function TextInput(
 ) {
   return (
     <input
-      className="field"
+      className="input"
       value={value}
       onChange={(e) => onChange(e.target.value)}
       onKeyDown={(e) => { if (e.key === 'Enter' && onEnter) onEnter() }}
@@ -29,17 +33,5 @@ export function TextInput(
       autoCapitalize="sentences"
       autoCorrect="off"
     />
-  )
-}
-
-/** Step dots for a multi-step wizard. */
-export function Steps({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="steps" aria-label={`Step ${current} of ${total}`}>
-      {Array.from({ length: total }, (_, i) => (
-        <span key={i} className={'steps__dot' + (i < current ? ' steps__dot--on' : '')} />
-      ))}
-      <span className="steps__text">Step {current} of {total}</span>
-    </div>
   )
 }

@@ -1,22 +1,28 @@
 import { PrimaryButton, SecondaryAction } from '../components/Controls'
-import { RadialTimer } from '../components/RadialTimer'
+import { TimerBar } from '../components/TimerBar'
 import type { Task } from '../lib/types'
 import './TaskScreen.css'
 
+/**
+ * Timer bar at the top edge. Task text and two controls. Nothing above the
+ * task — no title, no icon, no room name, no step counter. No back button,
+ * because there is no list to go back to.
+ */
 export function TaskScreen(
-  { task, fraction, remainingMs, onDone, onSwap }:
-  { task: Task; fraction: number; remainingMs: number; onDone: () => void; onSwap?: () => void },
+  { task, fraction, onDone, onSwap }:
+  { task: Task; fraction: number; onDone: () => void; onSwap?: () => void },
 ) {
   return (
-    <main className="page task">
-      <RadialTimer fraction={fraction} remainingMs={remainingMs} />
-      <div className="task__card glass card">
+    <>
+      <TimerBar fraction={fraction} />
+      <main className="task">
         <p className="task__text">{task.text}</p>
-      </div>
-      <div className="page__foot">
-        <PrimaryButton onClick={onDone}>Done</PrimaryButton>
-        {onSwap && <SecondaryAction onClick={onSwap}>Not this one</SecondaryAction>}
-      </div>
-    </main>
+        <div className="task__controls">
+          <PrimaryButton onClick={onDone}>done</PrimaryButton>
+          {/* A room reset has a fixed sequence, so there is nothing to swap to. */}
+          {onSwap && <SecondaryAction onClick={onSwap}>not this one</SecondaryAction>}
+        </div>
+      </main>
+    </>
   )
 }

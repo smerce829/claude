@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { ChoiceTile, PrimaryButton } from '../components/Controls'
-import type { Duration, Energy, Task } from '../lib/types'
+import { ChoiceTile, SecondaryAction } from '../components/Controls'
+import type { Duration, Energy } from '../lib/types'
 import './StartInput.css'
 
 const ENERGY: Array<{ v: Energy; label: string }> = [
-  { v: 'low', label: 'Low' },
-  { v: 'medium', label: 'Medium' },
-  { v: 'good', label: 'Good' },
+  { v: 'low', label: 'low' },
+  { v: 'medium', label: 'medium' },
+  { v: 'good', label: 'good' },
 ]
 const TIME: Array<{ v: Duration; label: string }> = [
   { v: 5, label: '5 min' },
@@ -15,68 +15,50 @@ const TIME: Array<{ v: Duration; label: string }> = [
 ]
 
 /**
- * In Low-Energy mode the choosers are replaced by three ready micro-actions,
- * so the screen asks for nothing at all.
+ * Nothing on screen but the two rows — no header, no nav, no logo.
+ * No confirm button: selecting the second value fires immediately.
  */
 export function StartInput(
-  { onStart, lowEnergy, micro, onMicro }:
-  {
-    onStart: (e: Energy, d: Duration) => void
-    lowEnergy: boolean
-    micro: Task[]
-    onMicro: (t: Task) => void
-  },
+  { onStart, onElse }: { onStart: (e: Energy, d: Duration) => void; onElse: () => void },
 ) {
   const [energy, setEnergy] = useState<Energy | null>(null)
   const [time, setTime] = useState<Duration | null>(null)
 
-  if (lowEnergy) {
-    return (
-      <main className="page start start--low">
-        <div className="page__fill">
-          <h1 className="start__lead">Just one of these.</h1>
-          <div className="micro">
-            {micro.map((t) => (
-              <button key={t.id} className="micro__card glass" onClick={() => onMicro(t)}>
-                {t.text}
-              </button>
-            ))}
-          </div>
-        </div>
-      </main>
-    )
+  const chooseEnergy = (v: Energy) => {
+    setEnergy(v)
+    if (time !== null) onStart(v, time)
+  }
+  const chooseTime = (v: Duration) => {
+    setTime(v)
+    if (energy !== null) onStart(energy, v)
   }
 
-  const chooseEnergy = (v: Energy) => { setEnergy(v); if (time !== null) onStart(v, time) }
-  const chooseTime = (v: Duration) => { setTime(v); if (energy !== null) onStart(energy, v) }
-
   return (
-    <main className="page start">
-      <div className="page__fill">
-        <div className="start__group">
-          <p className="start__label">Energy</p>
-          <div className="start__row" role="group" aria-label="Energy">
-            {ENERGY.map((o) => (
-              <ChoiceTile key={o.v} label={o.label} selected={energy === o.v}
-                onClick={() => chooseEnergy(o.v)} />
-            ))}
-          </div>
-        </div>
-        <div className="start__group">
-          <p className="start__label">Time</p>
-          <div className="start__row" role="group" aria-label="Time">
-            {TIME.map((o) => (
-              <ChoiceTile key={o.v} label={o.label} selected={time === o.v}
-                onClick={() => chooseTime(o.v)} />
-            ))}
-          </div>
+    <main className="start">
+      <div className="start__group">
+        <h1 className="start__label">energy</h1>
+        <div className="start__row" role="group" aria-label="energy">
+          {ENERGY.map((o) => (
+            <ChoiceTile key={o.v} label={o.label} selected={energy === o.v}
+              onClick={() => chooseEnergy(o.v)} />
+          ))}
         </div>
       </div>
-      {energy !== null && time === null && (
-        <div className="page__foot dim-on-low">
-          <PrimaryButton onClick={() => chooseTime(5)}>Pick a length</PrimaryButton>
+
+      <div className="start__group">
+        <h1 className="start__label">time</h1>
+        <div className="start__row" role="group" aria-label="time">
+          {TIME.map((o) => (
+            <ChoiceTile key={o.v} label={o.label} selected={time === o.v}
+              onClick={() => chooseTime(o.v)} />
+          ))}
         </div>
-      )}
+      </div>
+
+      {/* The only way to reach the other four modules. Section 7.1 keeps this
+          screen bare, and section 9 forbids a home screen, so this is one
+          secondary action rather than a nav bar. */}
+      <SecondaryAction onClick={onElse}>something else</SecondaryAction>
     </main>
   )
 }

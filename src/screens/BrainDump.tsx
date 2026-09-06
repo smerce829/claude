@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { ArrowUp } from 'lucide-react'
-import { SecondaryAction, PrimaryButton } from '../components/Controls'
-import { Back, ScreenTitle } from '../components/Shell'
+import { PrimaryButton, SecondaryAction } from '../components/Controls'
+import { Back, ScreenTitle, TextInput } from '../components/Shell'
 import './BrainDump.css'
 
-/** Floating catcher: type and fire without leaving the screen. */
+/**
+ * Phase one: a single input field. Enter adds a line.
+ * No editing, no reordering, no tagging. Dump until empty.
+ */
 export function BrainDump(
   { inbox, onAdd, onSort, onBack }:
   { inbox: string[]; onAdd: (t: string) => void; onSort: () => void; onBack: () => void },
@@ -13,37 +15,30 @@ export function BrainDump(
   const add = () => { if (text.trim()) { onAdd(text.trim()); setText('') } }
 
   return (
-    <main className="page bd">
+    <div className="page">
       <Back onBack={onBack} />
-      <ScreenTitle>Get it out of your head</ScreenTitle>
-
-      <div className="bd__list">
-        {inbox.length === 0
-          ? <p className="muted">Brain clear. Type anything that is taking up space.</p>
-          : inbox.map((t, i) => <div key={`${t}-${i}`} className="bd__pill glass">{t}</div>)}
+      <div className="page__fill">
+        <ScreenTitle>Get it out</ScreenTitle>
+        <TextInput value={text} onChange={setText} onEnter={add}
+          label="One thing" placeholder="one thing" />
+        <p className="bd__count">
+          {inbox.length === 0 ? 'Nothing yet. Add something to start.' :
+            `${inbox.length} ${inbox.length === 1 ? 'thing' : 'things'}`}
+        </p>
       </div>
-
-      <div className="bd__foot">
-        {inbox.length > 0 && <PrimaryButton onClick={onSort}>Sort {inbox.length}</PrimaryButton>}
-        <div className="bd__catcher glass">
-          <input
-            className="bd__input"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter') add() }}
-            aria-label="One thing"
-            placeholder="one thing"
-            autoComplete="off"
-          />
-          <button className="bd__fire" onClick={add} aria-label="Add">
-            <ArrowUp size={20} strokeWidth={2.6} aria-hidden="true" />
-          </button>
-        </div>
+      <div className="page__foot">
+        <PrimaryButton onClick={inbox.length > 0 ? onSort : add}>
+          {inbox.length > 0 ? 'sort it' : 'add'}
+        </PrimaryButton>
       </div>
-    </main>
+    </div>
   )
 }
 
+/**
+ * Phase two: each item once, three choices. "Never" deletes permanently — said
+ * plainly before the first use, once, and never again.
+ */
 export function BrainDumpSort(
   { item, warnNever, onSort, onAckWarning, onBack }:
   {
@@ -55,24 +50,28 @@ export function BrainDumpSort(
   },
 ) {
   const [confirming, setConfirming] = useState(false)
+
   const never = () => {
     if (warnNever && !confirming) { setConfirming(true); return }
-    setConfirming(false); onAckWarning(); onSort('never')
+    setConfirming(false)
+    onAckWarning()
+    onSort('never')
   }
+
   return (
-    <main className="page">
+    <div className="page">
       <Back onBack={onBack} />
       <div className="page__fill">
-        <div className="bd__card glass card" key={item}>
-          <p className="bd__item">{item}</p>
-        </div>
-        {confirming && <p className="bd__warn">Never deletes it for good. There is no undo.</p>}
+        <ScreenTitle>{item}</ScreenTitle>
+        {confirming && (
+          <p className="bd__warn">Never deletes it for good. There is no undo.</p>
+        )}
       </div>
       <div className="page__foot">
-        <PrimaryButton onClick={() => { setConfirming(false); onSort('today') }}>Today</PrimaryButton>
-        <SecondaryAction onClick={() => { setConfirming(false); onSort('week') }}>This week</SecondaryAction>
-        <SecondaryAction onClick={never}>{confirming ? 'Yes, never' : 'Never'}</SecondaryAction>
+        <SecondaryAction onClick={() => { setConfirming(false); onSort('today') }}>today</SecondaryAction>
+        <SecondaryAction onClick={() => { setConfirming(false); onSort('week') }}>this week</SecondaryAction>
+        <SecondaryAction onClick={never}>{confirming ? 'yes, never' : 'never'}</SecondaryAction>
       </div>
-    </main>
+    </div>
   )
 }

@@ -1,60 +1,72 @@
-/* ADHD Life OS — visual system v2 (dark-first, glassmorphism).
-   Replaces the previous locked flat system per the UI/UX overhaul directive.
+/* Design system — locked. See build spec section 6.
+   Do not add colours, sizes, shadows, or gradients to this file.
 
-   Contrast note: the directive's accent fills fail WCAG AA with white labels
-   (white on #06b6d4 is 2.43:1, on #10b981 2.54:1, on #f59e0b 2.15:1). Every
-   accent fill therefore takes near-black ink, which measures 8.65:1 on cyan
-   and serves the directive's own "high contrast" requirement. */
+   Two documented deviations from the written spec, both forced by
+   measured contrast. Neither introduces a new colour:
+
+   1. --ink-on-purple is #000000, not --ink (#232323).
+      #232323 on #896CFE measures 4.22:1. WCAG AA needs 4.5:1 for
+      --type-control (17px/600 = 12.75pt bold, below the 14pt-bold
+      large-text threshold). #000000 measures 5.64:1 and passes.
+      The spec's claim that black on purple "passes comfortably" holds
+      for pure black only. Brand purple is unchanged.
+      Dark mode needs no exception: #232323 on #B3A0FF is 7.03:1.
+
+   2. The unselected choice tile border is --ink-muted, not --line.
+      --line on --surface is 1.26:1, so the tile boundary is invisible
+      in the bad light this app is specified for, and fails WCAG 1.4.11
+      (3:1 for control boundaries). --ink-muted measures 5.08:1 light
+      and 6.26:1 dark. Existing token, no new colour.
+*/
 
 :root {
-  /* Ground */
-  --bg-0:          #0b0f19;
-  --bg-1:          #111827;
-  --glass:         rgba(17, 24, 39, 0.75);
-  --glass-strong:  rgba(17, 24, 39, 0.9);
-  --hairline:      rgba(255, 255, 255, 0.08);
-  /* Interactive boundaries need 3:1, so controls use this, not --hairline. */
-  --edge:          rgba(255, 255, 255, 0.28);
+  --surface:       #FFFFFF;
+  --surface-sunk:  #F5F4F8;
+  --ink:           #232323;
+  --ink-muted:     #6E6E72;
+  --line:          #E6E4EC;
+  --purple:        #896CFE;
+  --purple-light:  #B3A0FF;
+  --lime:          #E2F163;
+  --danger:        #B32338;
 
-  /* Ambient */
-  --glow-indigo:   #6366f1;
-  --glow-violet:   #8b5cf6;
+  --ink-on-purple: #000000;  /* deviation 1 */
 
-  /* Accents */
-  --cyan:          #06b6d4;
-  --cyan-bright:   #22d3ee;
-  --emerald:       #10b981;
-  --amber:         #f59e0b;
-  --rose:          #f43f5e;
-  /* Ink for every accent fill. Never white — see contrast note. */
-  --on-accent:     #04070d;
+  --type-task:     40px;
+  --type-title:    24px;
+  --type-body:     17px;
+  --type-control:  17px;
+  --type-small:    14px;
 
-  /* Type */
-  --text:          #f9fafb;
-  --text-muted:    #9ca3af;
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display',
-          'Segoe UI', Roboto, sans-serif;
+  --font-display:  'Poppins', system-ui, sans-serif;
+  --font-text:     'League Spartan', system-ui, sans-serif;
 
-  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px;
-  --s-7:48px; --s-8:64px;
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
 
-  --r-sm: 12px;
-  --r:    18px;
-  --r-lg: 26px;
-  --r-pill: 999px;
-
+  --radius: 16px;
   --target: 56px;
-  --pad: 20px;
+  --pad:    24px;
 
-  --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 24px 60px -20px rgba(0, 0, 0, 0.65);
-  --ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --t: 0.25s var(--ease);
+  --t-state: 120ms;
+  --t-screen: 200ms;
+}
 
-  --header-h: 60px;
-  --dock-h: 72px;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface:      #232323;
+    --surface-sunk: #2E2E2E;
+    --ink:          #FFFFFF;
+    --ink-muted:    #A3A3A8;
+    --line:         #3A3A3A;
+    --purple:       #B3A0FF;
+    --purple-light: #896CFE;
+    --lime:         #E2F163;
+    --danger:       #FF6B7E;
 
-  color-scheme: dark;
+    /* 7.03:1 on #B3A0FF. No exception needed. */
+    --ink-on-purple: #232323;
+  }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -62,98 +74,55 @@
 html, body {
   margin: 0;
   padding: 0;
-  min-height: 100%;
-  background: var(--bg-0);
-  color: var(--text);
-  font-family: var(--font);
-  font-size: 16px;
-  font-weight: 500;
+  height: 100%;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--type-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+body {
+  /* One-handed use. Nothing scrolls sideways, nothing rubber-bands. */
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Ambient glows. Fixed and non-interactive so they never cost a repaint
-   during scroll and never intercept a tap. */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(60% 45% at 15% 0%, color-mix(in srgb, var(--glow-indigo) 26%, transparent), transparent 70%),
-    radial-gradient(55% 40% at 90% 12%, color-mix(in srgb, var(--glow-violet) 22%, transparent), transparent 72%),
-    radial-gradient(70% 50% at 50% 100%, color-mix(in srgb, var(--glow-indigo) 14%, transparent), transparent 75%);
-  transition: opacity 400ms var(--ease);
-}
-
 #root {
-  position: relative;
-  z-index: 1;
+  min-height: 100%;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
-h1, h2, h3 {
-  margin: 0;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  text-wrap: balance;
-}
-
 button {
-  font: inherit;
+  font-family: inherit;
+  font-size: inherit;
   color: inherit;
   background: none;
   border: none;
   cursor: pointer;
-  transition: transform var(--t), background-color var(--t),
-              border-color var(--t), opacity var(--t), box-shadow var(--t);
+  /* Minimum target is 56px, not 44px. */
+  min-height: var(--target);
 }
-button:active { transform: translateY(2px) scale(0.99); }
 
 input {
-  font: inherit;
-  color: var(--text);
+  font-family: inherit;
+  font-size: var(--type-body);
+  color: var(--ink);
 }
 
+/* Focus is always visible. Keyboard users exist even on a phone-first app. */
 :focus-visible {
-  outline: 2px solid var(--cyan-bright);
-  outline-offset: 3px;
-  border-radius: 6px;
+  outline: 2px solid var(--purple-light);
+  outline-offset: 2px;
 }
-
-/* Frosted containers. */
-.glass {
-  background: var(--glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--hairline);
-  box-shadow: var(--shadow);
-  border-radius: var(--r);
-}
-
-/* ---- Low-Energy / Burnout Mode ----
-   Dims the ambient field, drops secondary detail, warms the accent. */
-:root[data-energy='low'] {
-  --cyan: var(--amber);
-  --cyan-bright: #fbbf24;
-}
-:root[data-energy='low'] body::before { opacity: 0.35; }
-[data-energy='low'] .dim-on-low { opacity: 0; pointer-events: none; }
-
-.dim-on-low { transition: opacity 400ms var(--ease); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  button:active { transform: none; }
 }

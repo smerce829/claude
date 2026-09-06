@@ -23,7 +23,7 @@ export function RoomReset(
       <Back onBack={onBack} />
       <div className="page__fill">
         <div className="rr__group">
-          <ScreenTitle>Which room?</ScreenTitle>
+          <ScreenTitle>Which room</ScreenTitle>
           <div className="rr__rooms" role="group" aria-label="room">
             {ROOMS.map((r) => (
               <button
@@ -39,7 +39,7 @@ export function RoomReset(
         </div>
 
         <div className="rr__group">
-          <p className="rr__label">How long</p>
+          <p className="rr__label">how long</p>
           <div className="rr__times" role="group" aria-label="duration">
             {TIMES.map((m) => (
               <ChoiceTile key={m} label={`${m} min`} selected={mins === m}

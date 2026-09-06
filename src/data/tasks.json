@@ -1,112 +1,49 @@
 [
  {
   "id": "l5-01",
-  "text": "Put five things in the bin",
-  "energy": "low",
-  "duration": 5,
-  "room": "any"
- },
- {
-  "id": "l5-02",
-  "text": "Fill a glass with water and drink it",
+  "text": "Put one dish in the dishwasher",
   "energy": "low",
   "duration": 5,
   "room": "kitchen"
  },
  {
-  "id": "l5-03",
-  "text": "Take your medication",
+  "id": "l5-02",
+  "text": "Wipe down the bathroom sink",
   "energy": "low",
   "duration": 5,
-  "room": "any"
+  "room": "bathroom"
+ },
+ {
+  "id": "l5-03",
+  "text": "Take the trash bag out",
+  "energy": "low",
+  "duration": 5,
+  "room": "kitchen"
  },
  {
   "id": "l5-04",
-  "text": "Put your shoes by the door",
+  "text": "Fold three pieces of laundry",
   "energy": "low",
   "duration": 5,
-  "room": "entryway"
+  "room": "laundry"
  },
  {
   "id": "l5-05",
-  "text": "Throw out anything expired in the fridge door",
+  "text": "Refill your water bottle",
   "energy": "low",
   "duration": 5,
   "room": "kitchen"
  },
  {
   "id": "l5-06",
-  "text": "Put the remote back on the table",
-  "energy": "low",
-  "duration": 5,
-  "room": "living room"
- },
- {
-  "id": "l5-07",
-  "text": "Clear the top of the toilet cistern",
-  "energy": "low",
-  "duration": 5,
-  "room": "bathroom"
- },
- {
-  "id": "l5-08",
-  "text": "Put your phone on the charger",
-  "energy": "low",
-  "duration": 5,
-  "room": "any"
- },
- {
-  "id": "l5-09",
-  "text": "Open a window and leave it open",
-  "energy": "low",
-  "duration": 5,
-  "room": "any"
- },
- {
-  "id": "l5-10",
-  "text": "Put dirty socks in the laundry basket",
-  "energy": "low",
-  "duration": 5,
-  "room": "bedroom"
- },
- {
-  "id": "l5-11",
-  "text": "Wipe the bathroom mirror",
-  "energy": "low",
-  "duration": 5,
-  "room": "bathroom"
- },
- {
-  "id": "l5-12",
-  "text": "Bin the empty packaging on the counter",
+  "text": "Wipe the kitchen counter",
   "energy": "low",
   "duration": 5,
   "room": "kitchen"
  },
  {
-  "id": "l5-13",
-  "text": "Put one book back on the shelf",
-  "energy": "low",
-  "duration": 5,
-  "room": "living room"
- },
- {
-  "id": "l5-14",
-  "text": "Straighten the pillows on the sofa",
-  "energy": "low",
-  "duration": 5,
-  "room": "living room"
- },
- {
-  "id": "l5-15",
-  "text": "Throw away the receipts in your bag",
-  "energy": "low",
-  "duration": 5,
-  "room": "any"
- },
- {
-  "id": "l5-16",
-  "text": "Fill the pet water bowl",
+  "id": "l5-07",
+  "text": "Refill the pet's water bowl",
   "energy": "low",
   "duration": 5,
   "room": "kitchen",
@@ -115,8 +52,8 @@
   ]
  },
  {
-  "id": "l5-17",
-  "text": "Put the toys back in the box",
+  "id": "l5-08",
+  "text": "Put one toy in its bin",
   "energy": "low",
   "duration": 5,
   "room": "living room",
@@ -125,113 +62,123 @@
   ]
  },
  {
-  "id": "l15-01",
-  "text": "Load the dishwasher",
+  "id": "l5-09",
+  "text": "Take your medication",
   "energy": "low",
-  "duration": 15,
+  "duration": 5,
+  "room": "any"
+ },
+ {
+  "id": "l5-10",
+  "text": "Put your shoes by the door",
+  "energy": "low",
+  "duration": 5,
+  "room": "entryway"
+ },
+ {
+  "id": "l5-11",
+  "text": "Throw out anything expired in the fridge",
+  "energy": "low",
+  "duration": 5,
   "room": "kitchen"
  },
  {
-  "id": "l15-02",
-  "text": "Sort the post into keep and bin",
+  "id": "l5-12",
+  "text": "Put the remote back on the table",
+  "energy": "low",
+  "duration": 5,
+  "room": "living room"
+ },
+ {
+  "id": "l5-13",
+  "text": "Put your phone on the charger",
+  "energy": "low",
+  "duration": 5,
+  "room": "any"
+ },
+ {
+  "id": "l5-14",
+  "text": "Put dirty socks in the hamper",
+  "energy": "low",
+  "duration": 5,
+  "room": "bedroom"
+ },
+ {
+  "id": "l5-15",
+  "text": "Wipe the bathroom mirror",
+  "energy": "low",
+  "duration": 5,
+  "room": "bathroom"
+ },
+ {
+  "id": "l5-16",
+  "text": "Throw away the packaging on the counter",
+  "energy": "low",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "l5-17",
+  "text": "Put one book back on the shelf",
+  "energy": "low",
+  "duration": 5,
+  "room": "living room"
+ },
+ {
+  "id": "l15-01",
+  "text": "Sort the mail into two piles",
   "energy": "low",
   "duration": 15,
   "room": "entryway"
  },
  {
-  "id": "l15-03",
-  "text": "Fold the clean laundry on the bed",
+  "id": "l15-02",
+  "text": "Load the dishwasher completely",
   "energy": "low",
   "duration": 15,
-  "room": "bedroom"
+  "room": "kitchen"
+ },
+ {
+  "id": "l15-03",
+  "text": "Wipe down all kitchen counters",
+  "energy": "low",
+  "duration": 15,
+  "room": "kitchen"
  },
  {
   "id": "l15-04",
-  "text": "Clear one shelf in the fridge",
-  "energy": "low",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "l15-05",
-  "text": "Put away the clean dishes",
-  "energy": "low",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "l15-06",
-  "text": "Wipe the kitchen counters",
-  "energy": "low",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "l15-07",
-  "text": "Change the bin bag",
-  "energy": "low",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "l15-08",
-  "text": "Match the socks in the laundry basket",
+  "text": "Put away one load of laundry",
   "energy": "low",
   "duration": 15,
   "room": "laundry"
  },
  {
-  "id": "l15-09",
-  "text": "Clear the coffee table",
-  "energy": "low",
-  "duration": 15,
-  "room": "living room"
- },
- {
-  "id": "l15-10",
-  "text": "Water the plants",
+  "id": "l15-05",
+  "text": "Clear one surface completely",
   "energy": "low",
   "duration": 15,
   "room": "any"
  },
  {
-  "id": "l15-11",
-  "text": "Wipe the bathroom sink and taps",
+  "id": "l15-06",
+  "text": "Water the houseplants",
   "energy": "low",
   "duration": 15,
-  "room": "bathroom"
+  "room": "any"
  },
  {
-  "id": "l15-12",
-  "text": "Put away the clothes on the chair",
+  "id": "l15-07",
+  "text": "Brush the pet for five minutes",
   "energy": "low",
   "duration": 15,
-  "room": "bedroom"
+  "room": "living room",
+  "requires": [
+   "pets"
+  ]
  },
  {
-  "id": "l15-13",
-  "text": "Sort the shoes by the door",
-  "energy": "low",
-  "duration": 15,
-  "room": "entryway"
- },
- {
-  "id": "l15-14",
-  "text": "Clear your bedside table",
-  "energy": "low",
-  "duration": 15,
-  "room": "bedroom"
- },
- {
-  "id": "l15-15",
-  "text": "Empty the bathroom bin",
-  "energy": "low",
-  "duration": 15,
-  "room": "bathroom"
- },
- {
-  "id": "l15-16",
-  "text": "Clear your desk for tomorrow",
+  "id": "l15-08",
+  "text": "Clear your desk surface",
   "energy": "low",
   "duration": 15,
   "room": "desk",
@@ -240,102 +187,161 @@
   ]
  },
  {
-  "id": "l15-17",
-  "text": "Sort the school bag for tomorrow",
+  "id": "l15-09",
+  "text": "Fold the clean laundry on the bed",
   "energy": "low",
   "duration": 15,
-  "room": "entryway",
-  "requires": [
-   "kids"
-  ]
- },
- {
-  "id": "l30-01",
-  "text": "Strip the bed and wash the sheets",
-  "energy": "low",
-  "duration": 30,
   "room": "bedroom"
  },
  {
-  "id": "l30-02",
-  "text": "Clear and wipe the kitchen table",
+  "id": "l15-10",
+  "text": "Clear one shelf in the fridge",
   "energy": "low",
-  "duration": 30,
+  "duration": 15,
   "room": "kitchen"
  },
  {
+  "id": "l15-11",
+  "text": "Put away the clean dishes",
+  "energy": "low",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "l15-12",
+  "text": "Change the trash bag",
+  "energy": "low",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "l15-13",
+  "text": "Match the socks in the hamper",
+  "energy": "low",
+  "duration": 15,
+  "room": "laundry"
+ },
+ {
+  "id": "l15-14",
+  "text": "Clear the coffee table",
+  "energy": "low",
+  "duration": 15,
+  "room": "living room"
+ },
+ {
+  "id": "l15-15",
+  "text": "Wipe the bathroom sink and faucet",
+  "energy": "low",
+  "duration": 15,
+  "room": "bathroom"
+ },
+ {
+  "id": "l15-16",
+  "text": "Put away the clothes on the chair",
+  "energy": "low",
+  "duration": 15,
+  "room": "bedroom"
+ },
+ {
+  "id": "l15-17",
+  "text": "Clear your nightstand",
+  "energy": "low",
+  "duration": 15,
+  "room": "bedroom"
+ },
+ {
+  "id": "l30-01",
+  "text": "Vacuum one room",
+  "energy": "low",
+  "duration": 30,
+  "room": "any"
+ },
+ {
+  "id": "l30-02",
+  "text": "Clean the bathroom mirror and sink",
+  "energy": "low",
+  "duration": 30,
+  "room": "bathroom"
+ },
+ {
   "id": "l30-03",
-  "text": "Sort one drawer into keep and bin",
+  "text": "Sort a drawer into keep and toss",
   "energy": "low",
   "duration": 30,
   "room": "any"
  },
  {
   "id": "l30-04",
-  "text": "Put away all the clean laundry",
+  "text": "Wipe down the kitchen appliances",
   "energy": "low",
   "duration": 30,
-  "room": "laundry"
+  "room": "kitchen"
  },
  {
   "id": "l30-05",
-  "text": "Clear the floor of your bedroom",
+  "text": "Change the bed sheets",
   "energy": "low",
   "duration": 30,
   "room": "bedroom"
  },
  {
   "id": "l30-06",
+  "text": "Pack tomorrow's school bag",
+  "energy": "low",
+  "duration": 30,
+  "room": "entryway",
+  "requires": [
+   "kids"
+  ]
+ },
+ {
+  "id": "l30-07",
+  "text": "Clear and wipe your desk fully",
+  "energy": "low",
+  "duration": 30,
+  "room": "desk",
+  "requires": [
+   "wfh"
+  ]
+ },
+ {
+  "id": "l30-08",
+  "text": "Strip the bed and wash the sheets",
+  "energy": "low",
+  "duration": 30,
+  "room": "bedroom"
+ },
+ {
+  "id": "l30-09",
+  "text": "Clear and wipe the kitchen table",
+  "energy": "low",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "l30-10",
   "text": "Wash the dishes in the sink",
   "energy": "low",
   "duration": 30,
   "room": "kitchen"
  },
  {
-  "id": "l30-07",
-  "text": "Sort the pile on the dining table",
-  "energy": "low",
-  "duration": 30,
-  "room": "living room"
- },
- {
-  "id": "l30-08",
+  "id": "l30-11",
   "text": "Clear one kitchen counter completely",
   "energy": "low",
   "duration": 30,
   "room": "kitchen"
  },
  {
-  "id": "l30-09",
-  "text": "Empty every bin in the house",
+  "id": "l30-12",
+  "text": "Empty every trash can in the house",
   "energy": "low",
   "duration": 30,
   "room": "any"
  },
  {
-  "id": "l30-10",
-  "text": "Sort the mail pile into three piles",
-  "energy": "low",
-  "duration": 30,
-  "room": "entryway"
- },
- {
-  "id": "l30-11",
-  "text": "Tidy the sofa and the floor around it",
-  "energy": "low",
-  "duration": 30,
-  "room": "living room"
- },
- {
-  "id": "l30-12",
-  "text": "Put away everything on the bathroom floor",
-  "energy": "low",
-  "duration": 30,
-  "room": "bathroom"
- },
- {
   "id": "l30-13",
-  "text": "Clear the top of the chest of drawers",
+  "text": "Clear the floor of your bedroom",
   "energy": "low",
   "duration": 30,
   "room": "bedroom"
@@ -356,8 +362,659 @@
  },
  {
   "id": "l30-16",
-  "text": "Sort the toy box into keep and bin",
+  "text": "Put away everything on the bathroom floor",
   "energy": "low",
+  "duration": 30,
+  "room": "bathroom"
+ },
+ {
+  "id": "m5-01",
+  "text": "Send one overdue text",
+  "energy": "medium",
+  "duration": 5,
+  "room": "any"
+ },
+ {
+  "id": "m5-02",
+  "text": "Book one appointment online",
+  "energy": "medium",
+  "duration": 5,
+  "room": "any"
+ },
+ {
+  "id": "m5-03",
+  "text": "Empty the dishwasher",
+  "energy": "medium",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "m5-04",
+  "text": "Take out the recycling",
+  "energy": "medium",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "m5-05",
+  "text": "Answer one email",
+  "energy": "medium",
+  "duration": 5,
+  "room": "desk"
+ },
+ {
+  "id": "m5-06",
+  "text": "Scoop the litter box",
+  "energy": "medium",
+  "duration": 5,
+  "room": "bathroom",
+  "requires": [
+   "pets"
+  ]
+ },
+ {
+  "id": "m5-07",
+  "text": "Check the school folder for notes",
+  "energy": "medium",
+  "duration": 5,
+  "room": "entryway",
+  "requires": [
+   "kids"
+  ]
+ },
+ {
+  "id": "m5-08",
+  "text": "Wipe the stovetop",
+  "energy": "medium",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "m5-09",
+  "text": "Make the bed",
+  "energy": "medium",
+  "duration": 5,
+  "room": "bedroom"
+ },
+ {
+  "id": "m5-10",
+  "text": "Wipe the toilet seat and rim",
+  "energy": "medium",
+  "duration": 5,
+  "room": "bathroom"
+ },
+ {
+  "id": "m5-11",
+  "text": "Shake out the doormat",
+  "energy": "medium",
+  "duration": 5,
+  "room": "entryway"
+ },
+ {
+  "id": "m5-12",
+  "text": "Put away the clean silverware",
+  "energy": "medium",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "m5-13",
+  "text": "Clear the passenger seat of the car",
+  "energy": "medium",
+  "duration": 5,
+  "room": "car"
+ },
+ {
+  "id": "m5-14",
+  "text": "Wipe the inside of the microwave",
+  "energy": "medium",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "m5-15",
+  "text": "Put the shoes on the rack",
+  "energy": "medium",
+  "duration": 5,
+  "room": "entryway"
+ },
+ {
+  "id": "m5-16",
+  "text": "Refill the soap dispenser",
+  "energy": "medium",
+  "duration": 5,
+  "room": "bathroom"
+ },
+ {
+  "id": "m5-17",
+  "text": "Clear the windowsill",
+  "energy": "medium",
+  "duration": 5,
+  "room": "any"
+ },
+ {
+  "id": "m15-01",
+  "text": "Unload and reload the dishwasher",
+  "energy": "medium",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "m15-02",
+  "text": "Wipe down the stove and counters",
+  "energy": "medium",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "m15-03",
+  "text": "Reply to three emails",
+  "energy": "medium",
+  "duration": 15,
+  "room": "desk"
+ },
+ {
+  "id": "m15-04",
+  "text": "Lay out tomorrow's clothes",
+  "energy": "medium",
+  "duration": 15,
+  "room": "bedroom"
+ },
+ {
+  "id": "m15-05",
+  "text": "Clean the microwave inside and out",
+  "energy": "medium",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "m15-06",
+  "text": "Clear your inbox to under ten",
+  "energy": "medium",
+  "duration": 15,
+  "room": "desk",
+  "requires": [
+   "wfh"
+  ]
+ },
+ {
+  "id": "m15-07",
+  "text": "Walk the dog around the block",
+  "energy": "medium",
+  "duration": 15,
+  "room": "any",
+  "requires": [
+   "pets"
+  ]
+ },
+ {
+  "id": "m15-08",
+  "text": "Clean the bathroom sink and mirror",
+  "energy": "medium",
+  "duration": 15,
+  "room": "bathroom"
+ },
+ {
+  "id": "m15-09",
+  "text": "Vacuum the living room floor",
+  "energy": "medium",
+  "duration": 15,
+  "room": "living room"
+ },
+ {
+  "id": "m15-10",
+  "text": "Clean out the fridge shelves",
+  "energy": "medium",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "m15-11",
+  "text": "Sweep and mop the kitchen floor",
+  "energy": "medium",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "m15-12",
+  "text": "Sort the cabinet under the sink",
+  "energy": "medium",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "m15-13",
+  "text": "Wipe all the kitchen cabinet doors",
+  "energy": "medium",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "m15-14",
+  "text": "Tidy the entryway and hang the coats",
+  "energy": "medium",
+  "duration": 15,
+  "room": "entryway"
+ },
+ {
+  "id": "m15-15",
+  "text": "Clean the toilet",
+  "energy": "medium",
+  "duration": 15,
+  "room": "bathroom"
+ },
+ {
+  "id": "m15-16",
+  "text": "Sort the laundry into darks and lights",
+  "energy": "medium",
+  "duration": 15,
+  "room": "laundry"
+ },
+ {
+  "id": "m15-17",
+  "text": "Clear the car of trash",
+  "energy": "medium",
+  "duration": 15,
+  "room": "car"
+ },
+ {
+  "id": "m30-01",
+  "text": "Meal prep one dish",
+  "energy": "medium",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "m30-02",
+  "text": "Deep clean the kitchen sink",
+  "energy": "medium",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "m30-03",
+  "text": "Organize one kitchen cabinet",
+  "energy": "medium",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "m30-04",
+  "text": "Do one full load of laundry",
+  "energy": "medium",
+  "duration": 30,
+  "room": "laundry"
+ },
+ {
+  "id": "m30-05",
+  "text": "Clean the car interior",
+  "energy": "medium",
+  "duration": 30,
+  "room": "car"
+ },
+ {
+  "id": "m30-06",
+  "text": "Pack lunches for tomorrow",
+  "energy": "medium",
+  "duration": 30,
+  "room": "kitchen",
+  "requires": [
+   "kids"
+  ]
+ },
+ {
+  "id": "m30-07",
+  "text": "Process your inbox to zero",
+  "energy": "medium",
+  "duration": 30,
+  "room": "desk",
+  "requires": [
+   "wfh"
+  ]
+ },
+ {
+  "id": "m30-08",
+  "text": "Clean the whole bathroom",
+  "energy": "medium",
+  "duration": 30,
+  "room": "bathroom"
+ },
+ {
+  "id": "m30-09",
+  "text": "Vacuum the whole apartment",
+  "energy": "medium",
+  "duration": 30,
+  "room": "any"
+ },
+ {
+  "id": "m30-10",
+  "text": "Sort and put away the laundry pile",
+  "energy": "medium",
+  "duration": 30,
+  "room": "laundry"
+ },
+ {
+  "id": "m30-11",
+  "text": "Clean the inside of the fridge",
+  "energy": "medium",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "m30-12",
+  "text": "Tidy and vacuum the bedroom",
+  "energy": "medium",
+  "duration": 30,
+  "room": "bedroom"
+ },
+ {
+  "id": "m30-13",
+  "text": "Sort the closet into keep and donate",
+  "energy": "medium",
+  "duration": 30,
+  "room": "bedroom"
+ },
+ {
+  "id": "m30-14",
+  "text": "Clean the oven door and stovetop",
+  "energy": "medium",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "m30-15",
+  "text": "Sort the paperwork into folders",
+  "energy": "medium",
+  "duration": 30,
+  "room": "desk"
+ },
+ {
+  "id": "m30-16",
+  "text": "Organize the bathroom cabinet",
+  "energy": "medium",
+  "duration": 30,
+  "room": "bathroom"
+ },
+ {
+  "id": "g5-01",
+  "text": "Reply to the text you're avoiding",
+  "energy": "good",
+  "duration": 5,
+  "room": "any"
+ },
+ {
+  "id": "g5-02",
+  "text": "Schedule a dentist appointment",
+  "energy": "good",
+  "duration": 5,
+  "room": "any"
+ },
+ {
+  "id": "g5-03",
+  "text": "Text a friend you've missed",
+  "energy": "good",
+  "duration": 5,
+  "room": "any"
+ },
+ {
+  "id": "g5-04",
+  "text": "Pay one bill online",
+  "energy": "good",
+  "duration": 5,
+  "room": "desk"
+ },
+ {
+  "id": "g5-05",
+  "text": "Update tomorrow's calendar",
+  "energy": "good",
+  "duration": 5,
+  "room": "desk"
+ },
+ {
+  "id": "g5-06",
+  "text": "Carry the recycling outside",
+  "energy": "good",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "g5-07",
+  "text": "Bring the laundry in",
+  "energy": "good",
+  "duration": 5,
+  "room": "laundry"
+ },
+ {
+  "id": "g5-08",
+  "text": "Move the laundry to the dryer",
+  "energy": "good",
+  "duration": 5,
+  "room": "laundry"
+ },
+ {
+  "id": "g5-09",
+  "text": "Put the groceries away",
+  "energy": "good",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "g5-10",
+  "text": "Carry the boxes to the car",
+  "energy": "good",
+  "duration": 5,
+  "room": "car"
+ },
+ {
+  "id": "g5-11",
+  "text": "Move the furniture back into place",
+  "energy": "good",
+  "duration": 5,
+  "room": "living room"
+ },
+ {
+  "id": "g5-12",
+  "text": "Take the empty bottles out",
+  "energy": "good",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "g5-13",
+  "text": "Bring the trash cans back in",
+  "energy": "good",
+  "duration": 5,
+  "room": "entryway"
+ },
+ {
+  "id": "g5-14",
+  "text": "Carry the laundry basket upstairs",
+  "energy": "good",
+  "duration": 5,
+  "room": "laundry"
+ },
+ {
+  "id": "g5-15",
+  "text": "Shake out the rugs outside",
+  "energy": "good",
+  "duration": 5,
+  "room": "living room"
+ },
+ {
+  "id": "g5-16",
+  "text": "Put away the heavy pans",
+  "energy": "good",
+  "duration": 5,
+  "room": "kitchen"
+ },
+ {
+  "id": "g5-17",
+  "text": "Take the donation bag to the car",
+  "energy": "good",
+  "duration": 5,
+  "room": "car"
+ },
+ {
+  "id": "g15-01",
+  "text": "Deep clean one bathroom",
+  "energy": "good",
+  "duration": 15,
+  "room": "bathroom"
+ },
+ {
+  "id": "g15-02",
+  "text": "Write tomorrow's to-do list",
+  "energy": "good",
+  "duration": 15,
+  "room": "desk"
+ },
+ {
+  "id": "g15-03",
+  "text": "Organize your desk drawer",
+  "energy": "good",
+  "duration": 15,
+  "room": "desk"
+ },
+ {
+  "id": "g15-04",
+  "text": "Return one item to a store",
+  "energy": "good",
+  "duration": 15,
+  "room": "any"
+ },
+ {
+  "id": "g15-05",
+  "text": "Make the call you're avoiding",
+  "energy": "good",
+  "duration": 15,
+  "room": "any"
+ },
+ {
+  "id": "g15-06",
+  "text": "Draft the email you're avoiding",
+  "energy": "good",
+  "duration": 15,
+  "room": "desk",
+  "requires": [
+   "wfh"
+  ]
+ },
+ {
+  "id": "g15-07",
+  "text": "Mop the kitchen and bathroom floors",
+  "energy": "good",
+  "duration": 15,
+  "room": "any"
+ },
+ {
+  "id": "g15-08",
+  "text": "Vacuum under the furniture",
+  "energy": "good",
+  "duration": 15,
+  "room": "living room"
+ },
+ {
+  "id": "g15-09",
+  "text": "Clean the shower properly",
+  "energy": "good",
+  "duration": 15,
+  "room": "bathroom"
+ },
+ {
+  "id": "g15-10",
+  "text": "Scrub the kitchen sink",
+  "energy": "good",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "g15-11",
+  "text": "Move and vacuum behind the couch",
+  "energy": "good",
+  "duration": 15,
+  "room": "living room"
+ },
+ {
+  "id": "g15-12",
+  "text": "Clean the oven racks",
+  "energy": "good",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "g15-13",
+  "text": "Wash the bedding and hang it up",
+  "energy": "good",
+  "duration": 15,
+  "room": "laundry"
+ },
+ {
+  "id": "g15-14",
+  "text": "Reorganize the pantry",
+  "energy": "good",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "g15-15",
+  "text": "Sweep the front step and walk",
+  "energy": "good",
+  "duration": 15,
+  "room": "entryway"
+ },
+ {
+  "id": "g15-16",
+  "text": "Clean the stovetop and vent hood",
+  "energy": "good",
+  "duration": 15,
+  "room": "kitchen"
+ },
+ {
+  "id": "g15-17",
+  "text": "Wash the car windows",
+  "energy": "good",
+  "duration": 15,
+  "room": "car"
+ },
+ {
+  "id": "g30-01",
+  "text": "Deep clean the kitchen top to bottom",
+  "energy": "good",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "g30-02",
+  "text": "File this month's paperwork",
+  "energy": "good",
+  "duration": 30,
+  "room": "desk"
+ },
+ {
+  "id": "g30-03",
+  "text": "Organize the closet by category",
+  "energy": "good",
+  "duration": 30,
+  "room": "bedroom"
+ },
+ {
+  "id": "g30-04",
+  "text": "Complete a workout session",
+  "energy": "good",
+  "duration": 30,
+  "room": "any"
+ },
+ {
+  "id": "g30-05",
+  "text": "Plan next week's meals",
+  "energy": "good",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "g30-06",
+  "text": "Organize the kids' toy area",
+  "energy": "good",
   "duration": 30,
   "room": "living room",
   "requires": [
@@ -365,715 +1022,76 @@
   ]
  },
  {
-  "id": "m5-01",
-  "text": "Wipe the hob",
-  "energy": "medium",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "m5-02",
-  "text": "Take the bins out",
-  "energy": "medium",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "m5-03",
-  "text": "Sort today's post",
-  "energy": "medium",
-  "duration": 5,
-  "room": "entryway"
- },
- {
-  "id": "m5-04",
-  "text": "Make the bed",
-  "energy": "medium",
-  "duration": 5,
-  "room": "bedroom"
- },
- {
-  "id": "m5-05",
-  "text": "Put the dishes in the dishwasher",
-  "energy": "medium",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "m5-06",
-  "text": "Wipe the toilet seat and rim",
-  "energy": "medium",
-  "duration": 5,
-  "room": "bathroom"
- },
- {
-  "id": "m5-07",
-  "text": "Shake out the doormat",
-  "energy": "medium",
-  "duration": 5,
-  "room": "entryway"
- },
- {
-  "id": "m5-08",
-  "text": "Put away the clean cutlery",
-  "energy": "medium",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "m5-09",
-  "text": "Clear the passenger seat of the car",
-  "energy": "medium",
-  "duration": 5,
-  "room": "car"
- },
- {
-  "id": "m5-10",
-  "text": "Wipe the inside of the microwave",
-  "energy": "medium",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "m5-11",
-  "text": "Put the shoes on the rack",
-  "energy": "medium",
-  "duration": 5,
-  "room": "entryway"
- },
- {
-  "id": "m5-12",
-  "text": "Refill the soap dispenser",
-  "energy": "medium",
-  "duration": 5,
-  "room": "bathroom"
- },
- {
-  "id": "m5-13",
-  "text": "Sweep the kitchen floor by the bin",
-  "energy": "medium",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "m5-14",
-  "text": "Clear the windowsill",
-  "energy": "medium",
-  "duration": 5,
-  "room": "any"
- },
- {
-  "id": "m5-15",
-  "text": "Wipe the light switches",
-  "energy": "medium",
-  "duration": 5,
-  "room": "any"
- },
- {
-  "id": "m5-16",
-  "text": "Sweep up the pet food around the bowl",
-  "energy": "medium",
-  "duration": 5,
-  "room": "kitchen",
-  "requires": [
-   "pets"
-  ]
- },
- {
-  "id": "m5-17",
-  "text": "Close every tab and shut the laptop",
-  "energy": "medium",
-  "duration": 5,
+  "id": "g30-07",
+  "text": "Finish the task you keep postponing",
+  "energy": "good",
+  "duration": 30,
   "room": "desk",
   "requires": [
    "wfh"
   ]
  },
  {
-  "id": "m15-01",
-  "text": "Clean the bathroom sink and mirror",
-  "energy": "medium",
-  "duration": 15,
-  "room": "bathroom"
- },
- {
-  "id": "m15-02",
-  "text": "Vacuum the living room floor",
-  "energy": "medium",
-  "duration": 15,
-  "room": "living room"
- },
- {
-  "id": "m15-03",
-  "text": "Change the bed sheets",
-  "energy": "medium",
-  "duration": 15,
-  "room": "bedroom"
- },
- {
-  "id": "m15-04",
-  "text": "Clean out the fridge shelves",
-  "energy": "medium",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "m15-05",
-  "text": "Sweep and mop the kitchen floor",
-  "energy": "medium",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "m15-06",
-  "text": "Sort the cupboard under the sink",
-  "energy": "medium",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "m15-07",
-  "text": "Wipe all the kitchen cupboard doors",
-  "energy": "medium",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "m15-08",
-  "text": "Clear and wipe your desk",
-  "energy": "medium",
-  "duration": 15,
-  "room": "desk"
- },
- {
-  "id": "m15-09",
-  "text": "Tidy the entryway and hang the coats",
-  "energy": "medium",
-  "duration": 15,
-  "room": "entryway"
- },
- {
-  "id": "m15-10",
-  "text": "Clean the toilet",
-  "energy": "medium",
-  "duration": 15,
-  "room": "bathroom"
- },
- {
-  "id": "m15-11",
-  "text": "Sort the laundry into darks and lights",
-  "energy": "medium",
-  "duration": 15,
-  "room": "laundry"
- },
- {
-  "id": "m15-12",
-  "text": "Vacuum the stairs",
-  "energy": "medium",
-  "duration": 15,
-  "room": "any"
- },
- {
-  "id": "m15-13",
-  "text": "Clear the car of rubbish",
-  "energy": "medium",
-  "duration": 15,
-  "room": "car"
- },
- {
-  "id": "m15-14",
-  "text": "Wipe the skirting boards in one room",
-  "energy": "medium",
-  "duration": 15,
-  "room": "any"
- },
- {
-  "id": "m15-15",
-  "text": "Clean the kitchen sink and taps",
-  "energy": "medium",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "m15-16",
-  "text": "Wash the pet bowls and refill them",
-  "energy": "medium",
-  "duration": 15,
-  "room": "kitchen",
-  "requires": [
-   "pets"
-  ]
- },
- {
-  "id": "m15-17",
-  "text": "Sort the kids clothes into keep and donate",
-  "energy": "medium",
-  "duration": 15,
-  "room": "bedroom",
-  "requires": [
-   "kids"
-  ]
- },
- {
-  "id": "m30-01",
-  "text": "Clean the whole bathroom",
-  "energy": "medium",
-  "duration": 30,
-  "room": "bathroom"
- },
- {
-  "id": "m30-02",
-  "text": "Vacuum the whole flat",
-  "energy": "medium",
-  "duration": 30,
-  "room": "any"
- },
- {
-  "id": "m30-03",
-  "text": "Sort and put away the laundry mountain",
-  "energy": "medium",
-  "duration": 30,
-  "room": "laundry"
- },
- {
-  "id": "m30-04",
-  "text": "Clean the inside of the fridge",
-  "energy": "medium",
-  "duration": 30,
-  "room": "kitchen"
- },
- {
-  "id": "m30-05",
-  "text": "Clear and organise one kitchen cupboard",
-  "energy": "medium",
-  "duration": 30,
-  "room": "kitchen"
- },
- {
-  "id": "m30-06",
-  "text": "Wash, dry and put away all dishes",
-  "energy": "medium",
-  "duration": 30,
-  "room": "kitchen"
- },
- {
-  "id": "m30-07",
-  "text": "Tidy and vacuum the bedroom",
-  "energy": "medium",
-  "duration": 30,
-  "room": "bedroom"
- },
- {
-  "id": "m30-08",
-  "text": "Sort the wardrobe into keep and donate",
-  "energy": "medium",
-  "duration": 30,
-  "room": "bedroom"
- },
- {
-  "id": "m30-09",
-  "text": "Clean the oven door and hob",
-  "energy": "medium",
-  "duration": 30,
-  "room": "kitchen"
- },
- {
-  "id": "m30-10",
-  "text": "Clear the spare room floor",
-  "energy": "medium",
-  "duration": 30,
-  "room": "any"
- },
- {
-  "id": "m30-11",
-  "text": "Sort the paperwork into folders",
-  "energy": "medium",
-  "duration": 30,
-  "room": "desk"
- },
- {
-  "id": "m30-12",
-  "text": "Clean the windows in one room",
-  "energy": "medium",
-  "duration": 30,
-  "room": "any"
- },
- {
-  "id": "m30-13",
-  "text": "Organise the bathroom cabinet",
-  "energy": "medium",
-  "duration": 30,
-  "room": "bathroom"
- },
- {
-  "id": "m30-14",
-  "text": "Clear and wipe every kitchen surface",
-  "energy": "medium",
-  "duration": 30,
-  "room": "kitchen"
- },
- {
-  "id": "m30-15",
-  "text": "Sort the storage under the bed",
-  "energy": "medium",
-  "duration": 30,
-  "room": "bedroom"
- },
- {
-  "id": "m30-16",
-  "text": "Deep clean the shower",
-  "energy": "medium",
-  "duration": 30,
-  "room": "bathroom"
- },
- {
-  "id": "g5-01",
-  "text": "Carry the recycling to the bin",
-  "energy": "good",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "g5-02",
-  "text": "Bring the washing in",
-  "energy": "good",
-  "duration": 5,
-  "room": "laundry"
- },
- {
-  "id": "g5-03",
-  "text": "Move the laundry to the dryer",
-  "energy": "good",
-  "duration": 5,
-  "room": "laundry"
- },
- {
-  "id": "g5-04",
-  "text": "Take the parcels to the door",
-  "energy": "good",
-  "duration": 5,
-  "room": "entryway"
- },
- {
-  "id": "g5-05",
-  "text": "Put the shopping away",
-  "energy": "good",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "g5-06",
-  "text": "Carry the boxes to the car",
-  "energy": "good",
-  "duration": 5,
-  "room": "car"
- },
- {
-  "id": "g5-07",
-  "text": "Move the furniture back into place",
-  "energy": "good",
-  "duration": 5,
-  "room": "living room"
- },
- {
-  "id": "g5-08",
-  "text": "Take the empty bottles out",
-  "energy": "good",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "g5-09",
-  "text": "Bring the bins back in",
-  "energy": "good",
-  "duration": 5,
-  "room": "entryway"
- },
- {
-  "id": "g5-10",
-  "text": "Carry the laundry basket upstairs",
-  "energy": "good",
-  "duration": 5,
-  "room": "laundry"
- },
- {
-  "id": "g5-11",
-  "text": "Shake out the rugs outside",
-  "energy": "good",
-  "duration": 5,
-  "room": "living room"
- },
- {
-  "id": "g5-12",
-  "text": "Put away the heavy pans",
-  "energy": "good",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "g5-13",
-  "text": "Move the drying rack out of the way",
-  "energy": "good",
-  "duration": 5,
-  "room": "laundry"
- },
- {
-  "id": "g5-14",
-  "text": "Take the donation bag to the car",
-  "energy": "good",
-  "duration": 5,
-  "room": "car"
- },
- {
-  "id": "g5-15",
-  "text": "Put the suitcase back in storage",
-  "energy": "good",
-  "duration": 5,
-  "room": "bedroom"
- },
- {
-  "id": "g5-16",
-  "text": "Move the bike out of the hallway",
-  "energy": "good",
-  "duration": 5,
-  "room": "entryway"
- },
- {
-  "id": "g5-17",
-  "text": "Carry the water bottles to the kitchen",
-  "energy": "good",
-  "duration": 5,
-  "room": "kitchen"
- },
- {
-  "id": "g15-01",
-  "text": "Mop the kitchen and bathroom floors",
-  "energy": "good",
-  "duration": 15,
-  "room": "any"
- },
- {
-  "id": "g15-02",
-  "text": "Vacuum under the furniture",
-  "energy": "good",
-  "duration": 15,
-  "room": "living room"
- },
- {
-  "id": "g15-03",
-  "text": "Clean the shower properly",
-  "energy": "good",
-  "duration": 15,
-  "room": "bathroom"
- },
- {
-  "id": "g15-04",
-  "text": "Take the donation bags to the car",
-  "energy": "good",
-  "duration": 15,
-  "room": "car"
- },
- {
-  "id": "g15-05",
-  "text": "Scrub the kitchen sink",
-  "energy": "good",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "g15-06",
-  "text": "Move and vacuum behind the sofa",
-  "energy": "good",
-  "duration": 15,
-  "room": "living room"
- },
- {
-  "id": "g15-07",
-  "text": "Clean the oven racks",
-  "energy": "good",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "g15-08",
-  "text": "Sort and carry out all the recycling",
-  "energy": "good",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "g15-09",
-  "text": "Wash the bedding and hang it up",
-  "energy": "good",
-  "duration": 15,
-  "room": "laundry"
- },
- {
-  "id": "g15-10",
-  "text": "Clean the bath",
-  "energy": "good",
-  "duration": 15,
-  "room": "bathroom"
- },
- {
-  "id": "g15-11",
-  "text": "Reorganise the food cupboard",
-  "energy": "good",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "g15-12",
-  "text": "Sweep the front step and path",
-  "energy": "good",
-  "duration": 15,
-  "room": "entryway"
- },
- {
-  "id": "g15-13",
-  "text": "Wash the kitchen bin inside and out",
-  "energy": "good",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "g15-14",
-  "text": "Move the boxes to the loft",
-  "energy": "good",
-  "duration": 15,
-  "room": "any"
- },
- {
-  "id": "g15-15",
-  "text": "Clean the hob and extractor",
-  "energy": "good",
-  "duration": 15,
-  "room": "kitchen"
- },
- {
-  "id": "g15-16",
-  "text": "Wash the car windows",
-  "energy": "good",
-  "duration": 15,
-  "room": "car"
- },
- {
-  "id": "g15-17",
-  "text": "Clear the garden table and chairs",
-  "energy": "good",
-  "duration": 15,
-  "room": "any"
- },
- {
-  "id": "g30-01",
-  "text": "Deep clean the kitchen",
-  "energy": "good",
-  "duration": 30,
-  "room": "kitchen"
- },
- {
-  "id": "g30-02",
-  "text": "Clear out the whole wardrobe",
-  "energy": "good",
-  "duration": 30,
-  "room": "bedroom"
- },
- {
-  "id": "g30-03",
-  "text": "Vacuum and mop the whole flat",
-  "energy": "good",
-  "duration": 30,
-  "room": "any"
- },
- {
-  "id": "g30-04",
-  "text": "Clean the inside of the oven",
-  "energy": "good",
-  "duration": 30,
-  "room": "kitchen"
- },
- {
-  "id": "g30-05",
-  "text": "Clear the garage floor",
-  "energy": "good",
-  "duration": 30,
-  "room": "any"
- },
- {
-  "id": "g30-06",
-  "text": "Move the furniture and clean underneath",
-  "energy": "good",
-  "duration": 30,
-  "room": "living room"
- },
- {
-  "id": "g30-07",
-  "text": "Sort the loft boxes into keep and bin",
-  "energy": "good",
-  "duration": 30,
-  "room": "any"
- },
- {
   "id": "g30-08",
-  "text": "Clean every window in the flat",
+  "text": "Clear out the whole closet",
   "energy": "good",
   "duration": 30,
-  "room": "any"
+  "room": "bedroom"
  },
  {
   "id": "g30-09",
-  "text": "Clear and organise the shed",
+  "text": "Vacuum and mop the whole apartment",
   "energy": "good",
   "duration": 30,
   "room": "any"
  },
  {
   "id": "g30-10",
+  "text": "Clean the inside of the oven",
+  "energy": "good",
+  "duration": 30,
+  "room": "kitchen"
+ },
+ {
+  "id": "g30-11",
+  "text": "Clear the garage floor",
+  "energy": "good",
+  "duration": 30,
+  "room": "any"
+ },
+ {
+  "id": "g30-12",
+  "text": "Move the furniture and clean underneath",
+  "energy": "good",
+  "duration": 30,
+  "room": "living room"
+ },
+ {
+  "id": "g30-13",
+  "text": "Clean every window in the apartment",
+  "energy": "good",
+  "duration": 30,
+  "room": "any"
+ },
+ {
+  "id": "g30-14",
   "text": "Wash all the bedding in the house",
   "energy": "good",
   "duration": 30,
   "room": "laundry"
  },
  {
-  "id": "g30-11",
-  "text": "Scrub the bathroom tiles and grout",
+  "id": "g30-15",
+  "text": "Scrub the bathroom tile and grout",
   "energy": "good",
   "duration": 30,
   "room": "bathroom"
  },
  {
-  "id": "g30-12",
-  "text": "Clear the spare room completely",
-  "energy": "good",
-  "duration": 30,
-  "room": "any"
- },
- {
-  "id": "g30-13",
-  "text": "Clear the pile by the front door",
-  "energy": "good",
-  "duration": 30,
-  "room": "entryway"
- },
- {
-  "id": "g30-14",
-  "text": "Clean behind the fridge and cooker",
+  "id": "g30-16",
+  "text": "Clean behind the fridge and stove",
   "energy": "good",
   "duration": 30,
   "room": "kitchen"
- },
- {
-  "id": "g30-15",
-  "text": "Weed the front path",
-  "energy": "good",
-  "duration": 30,
-  "room": "any"
- },
- {
-  "id": "g30-16",
-  "text": "Clear and sweep the balcony",
-  "energy": "good",
-  "duration": 30,
-  "room": "any"
  }
 ]

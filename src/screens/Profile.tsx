@@ -12,9 +12,9 @@ import './Profile.css'
  * never blocks the first task.
  */
 const OPTIONS = [
-  { key: 'kids' as const, label: 'Kids' },
-  { key: 'pets' as const, label: 'Pets' },
-  { key: 'wfh' as const, label: 'Work from home' },
+  { key: 'kids' as const, label: 'kids' },
+  { key: 'pets' as const, label: 'pets' },
+  { key: 'wfh' as const, label: 'work from home' },
 ]
 
 export function Profile({ onDone }: { onDone: (p: { kids: boolean; pets: boolean; wfh: boolean }) => void }) {
@@ -24,8 +24,7 @@ export function Profile({ onDone }: { onDone: (p: { kids: boolean; pets: boolean
   return (
     <main className="page">
       <div className="page__fill">
-        <ScreenTitle>Any of these yours?</ScreenTitle>
-        <p className="muted">Tap what applies. It only changes which tasks you get.</p>
+        <ScreenTitle>Any of these yours</ScreenTitle>
         <div className="prof__row" role="group" aria-label="Living situation">
           {OPTIONS.map((o) => (
             <button
@@ -40,7 +39,7 @@ export function Profile({ onDone }: { onDone: (p: { kids: boolean; pets: boolean
         </div>
       </div>
       <div className="page__foot">
-        <PrimaryButton onClick={() => onDone(on)}>Start</PrimaryButton>
+        <PrimaryButton onClick={() => onDone(on)}>start</PrimaryButton>
       </div>
     </main>
   )

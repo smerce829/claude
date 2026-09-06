@@ -7,8 +7,8 @@ import './Settings.css'
 
 /** Exactly two controls: export data as JSON, import data from JSON. Nothing else. */
 export function Settings(
-  { state, onImport, onBack }:
-  { state: State; onImport: (text: string) => void; onBack: () => void },
+  { state, onImport, onExported, onBack }:
+  { state: State; onImport: (text: string) => void; onExported: () => void; onBack: () => void },
 ) {
   const file = useRef<HTMLInputElement>(null)
 
@@ -20,6 +20,7 @@ export function Settings(
     a.download = 'my-data.json'
     a.click()
     URL.revokeObjectURL(url)
+    onExported()
   }
 
   const doImport = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,11 +38,11 @@ export function Settings(
       <div className="set__list">
         <button className="set__item" onClick={doExport}>
           <Download size={24} strokeWidth={2} aria-hidden="true" />
-          <span>Export your data</span>
+          <span>export your data</span>
         </button>
         <button className="set__item" onClick={() => file.current?.click()}>
           <Upload size={24} strokeWidth={2} aria-hidden="true" />
-          <span>Import your data</span>
+          <span>import your data</span>
         </button>
         <input
           ref={file}

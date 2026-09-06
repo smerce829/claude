@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Share } from 'lucide-react'
 import { PrimaryButton, SecondaryAction } from './Controls'
 import './InstallPrompt.css'
 
@@ -42,15 +43,24 @@ export function InstallPrompt({ onSettled }: { onSettled: () => void }) {
 
   return (
     <div className="install" role="dialog" aria-label="Add to home screen">
-      <p className="install__text">
-        {isIOS && !deferred
-          ? 'Add this to your home screen: share, then add to home screen.'
-          : 'Add this to your home screen so it opens like an app.'}
+      {isIOS && !deferred ? (
+        <p className="install__text">
+          {/* Spec 3 asks for a share glyph here specifically; it is the one
+              icon outside the section 6.5 set, and it replaces a word. */}
+          Add this to your home screen: tap <Share size={20} strokeWidth={2}
+            className="install__glyph" aria-label="Share" />, then add to home screen.
+        </p>
+      ) : (
+        <p className="install__text">Add this to your home screen so it opens like an app.</p>
+      )}
+      {/* Spec 5: the overlay carries the data-locality line, once. */}
+      <p className="install__note">
+        Your data stays on this phone — use export in settings to back it up.
       </p>
       {isIOS && !deferred
-        ? <PrimaryButton onClick={onSettled}>Got it</PrimaryButton>
-        : <PrimaryButton onClick={() => void install()}>Add to home screen</PrimaryButton>}
-      <SecondaryAction onClick={onSettled}>Not now</SecondaryAction>
+        ? <PrimaryButton onClick={onSettled}>got it</PrimaryButton>
+        : <PrimaryButton onClick={() => void install()}>add to home screen</PrimaryButton>}
+      <SecondaryAction onClick={onSettled}>not now</SecondaryAction>
     </div>
   )
 }

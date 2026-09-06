@@ -1,24 +1,25 @@
 import type { State } from './types'
 
 const KEY = 'adhdos:v1'
-export const SCHEMA_VERSION = 1
+export const SCHEMA_VERSION = 2
 
 function fresh(): State {
   return {
     license: { key: null, validatedAt: null },
     profile: { home: null, kids: false, pets: false, worksFromHome: false },
-    session: { lastTaskIds: [], completedToday: 0, lastCompletedDate: null, streak: 0 },
-    ui: { lowEnergy: false },
+    session: { lastTaskIds: [], completedToday: 0, lastCompletedDate: null },
     rooms: {},
     doompile: { name: null, items: [], deferred: [], deferredCap: 10 },
-    payday: { cycle: null, bills: [], lastRun: null },
+    payday: { cycle: null, bills: [], lastRun: null, carryover: [], cycleIndex: 0 },
     braindump: { inbox: [], today: [], thisWeek: [], todayDate: null },
     meta: {
       version: SCHEMA_VERSION,
       createdAt: Date.now(),
+      lastExportAt: null,
       installPromptShown: false,
       neverWarningShown: false,
       profileSet: false,
+      backupNudgeShown: false,
     },
   }
 }
@@ -34,12 +35,27 @@ export function migrate(raw: unknown): State {
   const base = fresh()
   if (!raw || typeof raw !== 'object') return base
 
-  const s = raw as Partial<State> & { meta?: Partial<State['meta']> }
+  let s = raw as Partial<State> & { meta?: Partial<State['meta']> }
   const from = s.meta?.version ?? 0
 
-  // v0 -> v1: pre-versioned data. Nothing to reshape yet; merge onto defaults
-  // so any key added since the user's last visit gets its default.
-  // Future: if (from < 2) { ...reshape... }
+  // v1 -> v2: bills gained a frequency, an anchor and a `checked` field, and
+  // payday gained carryover + cycleIndex. A v1 bill was implicitly monthly and
+  // used `paid`, so carry that across rather than dropping the user's list.
+  if (from < 2 && s.payday && Array.isArray(s.payday.bills)) {
+    s = {
+      ...s,
+      payday: {
+        ...s.payday,
+        bills: (s.payday.bills as unknown as Array<Record<string, unknown>>).map((b) => ({
+          name: String(b.name ?? ''),
+          frequency: 'monthly' as const,
+          anchorDay: typeof s.payday?.cycle === 'number' ? s.payday.cycle : 1,
+          anchorCycle: 0,
+          checked: Boolean(b.checked ?? b.paid ?? false),
+        })),
+      },
+    }
+  }
 
   const merged: State = {
     ...base,
@@ -47,7 +63,6 @@ export function migrate(raw: unknown): State {
     license: { ...base.license, ...s.license },
     profile: { ...base.profile, ...s.profile },
     session: { ...base.session, ...s.session },
-    ui: { ...base.ui, ...s.ui },
     rooms: { ...base.rooms, ...s.rooms },
     doompile: { ...base.doompile, ...s.doompile },
     payday: { ...base.payday, ...s.payday },
