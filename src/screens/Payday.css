@@ -11,14 +11,12 @@
 .pd__bill {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--s-3);
+  gap: var(--s-2);
   width: 100%;
   min-height: var(--target);
   padding: var(--s-3) 0;
   font-size: var(--type-body);
   color: var(--ink);
-  text-align: left;
   /* Dividers instead of card edges. */
   border-bottom: 1px solid var(--line);
 }
@@ -36,4 +34,39 @@
   flex: none;
   /* Ink or ink-muted only. Never coloured. */
   color: var(--ink);
+}
+
+.pd__suggest { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+.pd__chip {
+  min-height: var(--target);
+  padding: 0 var(--s-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--ink-muted);
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--type-body);
+}
+
+/* The row is two controls: tick it off, or take it off the list. */
+.pd__tick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  flex: 1;
+  min-width: 0;
+  min-height: var(--target);
+  text-align: left;
+  color: inherit;
+}
+
+.pd__remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--target);
+  min-height: var(--target);
+  flex: none;
+  color: var(--ink-muted);
 }

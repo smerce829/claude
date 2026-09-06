@@ -1,5 +1,6 @@
 export type Screen =
   | 'gate'
+  | 'profile'
   | 'start' | 'task' | 'complete'
   | 'menu'
   | 'room' | 'room-run' | 'room-done'

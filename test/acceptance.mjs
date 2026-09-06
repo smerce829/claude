@@ -24,6 +24,9 @@ ok('invalid key gives specific error', /wasn't recognised/.test(invalidMsg||''),
 await p.locator('.gate__input').fill('ABCD12-EFGH34-IJKL56')
 await p.getByRole('button',{name:'start'}).click()
 await p.waitForTimeout(300)
+if (await p.locator('.prof__row').count()) {
+  await p.getByRole('button',{name:'start'}).click(); await p.waitForTimeout(200)
+}
 
 console.log('\n=== START INPUT: two taps to a running task ===')
 ok('input screen shown', await p.locator('.start').isVisible())
@@ -105,6 +108,9 @@ const rctx = await b.newContext({viewport:{width:375,height:667}, reducedMotion:
 const rp = await rctx.newPage(); await rp.goto(B,{waitUntil:'networkidle'})
 await rp.locator('.gate__input').fill('ABCD12-EFGH34-IJKL56')
 await rp.getByRole('button',{name:'start'}).click(); await rp.waitForTimeout(300)
+if (await rp.locator('.prof__row').count()) {
+  await rp.getByRole('button',{name:'start'}).click(); await rp.waitForTimeout(200)
+}
 await rp.getByRole('button',{name:'low',exact:true}).click()
 await rp.getByRole('button',{name:'5 min',exact:true}).click()
 await rp.waitForSelector('.task__text')

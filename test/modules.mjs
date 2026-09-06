@@ -16,6 +16,10 @@ const unlock = async () => {
   await p.goto(B,{waitUntil:'networkidle'})
   await p.locator('.gate__input').fill('ABCD12-EFGH34-IJKL56')
   await p.getByRole('button',{name:'start'}).click(); await p.waitForTimeout(250)
+  // The living-situation question is asked once, before the first start screen.
+  if (await p.locator('.prof__row').count()) {
+    await p.getByRole('button',{name:'start'}).click(); await p.waitForTimeout(200)
+  }
 }
 await unlock()
 

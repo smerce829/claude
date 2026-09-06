@@ -7,6 +7,7 @@ import { DoomPileAdd, DoomPileName, DoomPileRun } from './screens/DoomPile'
 import { Gate } from './screens/Gate'
 import { Menu } from './screens/Menu'
 import { Payday } from './screens/Payday'
+import { Profile } from './screens/Profile'
 import { RoomReset } from './screens/RoomReset'
 import { Settings } from './screens/Settings'
 import { StartInput } from './screens/StartInput'
@@ -20,7 +21,12 @@ import type { Screen } from './lib/types.nav'
 
 export function App() {
   const [state, setState] = useState<State>(() => load())
-  const [screen, setScreen] = useState<Screen>(() => (load().license.key ? 'start' : 'gate'))
+  const [screen, setScreen] = useState<Screen>(() => {
+    const s = load()
+    if (!s.license.key) return 'gate'
+    // Existing installs that predate the question still get asked once.
+    return s.meta.profileSet ? 'start' : 'profile'
+  })
 
   const [task, setTask] = useState<Task | null>(null)
   const [startedAt, setStartedAt] = useState<number | null>(null)
@@ -175,6 +181,17 @@ export function App() {
       {screen === 'gate' && (
         <Gate onValid={(key) => {
           setState((s) => ({ ...s, license: { key, validatedAt: Date.now() } }))
+          setScreen('profile')
+        }} />
+      )}
+
+      {screen === 'profile' && (
+        <Profile onDone={(p) => {
+          setState((s) => ({
+            ...s,
+            profile: { ...s.profile, kids: p.kids, pets: p.pets, worksFromHome: p.wfh },
+            meta: { ...s.meta, profileSet: true },
+          }))
           setScreen('start')
         }} />
       )}
@@ -242,6 +259,7 @@ export function App() {
             payday: { ...s.payday, bills: s.payday.bills.map((b, j) => j === i ? { ...b, paid: !b.paid } : b) },
           }))}
           onAdd={(name) => setState((s) => ({ ...s, payday: { ...s.payday, bills: [...s.payday.bills, { name, paid: false }] } }))}
+          onRemove={(i) => setState((s) => ({ ...s, payday: { ...s.payday, bills: s.payday.bills.filter((_, j) => j !== i) } }))}
           onBack={() => setScreen('menu')}
         />
       )}

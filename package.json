@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test:acceptance": "node test/acceptance.mjs",
     "test:modules": "node test/modules.mjs",
-    "test": "node test/acceptance.mjs && node test/modules.mjs"
+    "test": "node test/acceptance.mjs && node test/modules.mjs && node test/profile.mjs",
+    "test:profile": "node test/profile.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.41.0",

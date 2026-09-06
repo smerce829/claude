@@ -31,5 +31,7 @@ export interface State {
     installPromptShown: boolean
     /** "Never" deletes permanently — said plainly once, and never again. */
     neverWarningShown: boolean
+    /** The living-situation question is asked once, on first run only. */
+    profileSet: boolean
   }
 }

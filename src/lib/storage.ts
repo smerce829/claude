@@ -17,6 +17,7 @@ function fresh(): State {
       createdAt: Date.now(),
       installPromptShown: false,
       neverWarningShown: false,
+      profileSet: false,
     },
   }
 }
