@@ -1,0 +1,43 @@
+.ring { position: relative; width: min(60vw, 232px); aspect-ratio: 1; margin: 0 auto; }
+
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+
+.ring__track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.09);
+  stroke-width: 12;
+}
+
+.ring__fill {
+  fill: none;
+  stroke: var(--cyan-bright);
+  stroke-width: 12;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--cyan) 70%, transparent));
+}
+
+.ring__read {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.ring__time {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.ring__cap {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}

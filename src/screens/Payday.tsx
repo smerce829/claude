@@ -40,13 +40,13 @@ export function Payday(
       <div className="page">
         <Back onBack={onBack} />
         <div className="page__fill">
-          <ScreenTitle>What day are you paid</ScreenTitle>
+          <ScreenTitle>What day are you paid?</ScreenTitle>
           <TextInput value={day} onChange={setDay} onEnter={saveCycle}
             label="Day of the month" placeholder="25" />
-          <p className="pd__hint">The day of the month, 1 to 31.</p>
+          <p className="muted">The day of the month, 1 to 31.</p>
         </div>
         <div className="page__foot">
-          <PrimaryButton onClick={saveCycle}>save</PrimaryButton>
+          <PrimaryButton onClick={saveCycle}>Save</PrimaryButton>
         </div>
       </div>
     )
@@ -55,29 +55,20 @@ export function Payday(
   return (
     <div className="page">
       <Back onBack={onBack} />
-      <p className="pd__cycle">Next {formatCycle(cycle)}</p>
+      <p className="pd__cycle">Next payday <strong>{formatCycle(cycle)}</strong></p>
 
       <div className="pd__list">
         {bills.length === 0 && (
-          <>
-            <p className="pd__hint">Nothing here yet. Tap what you pay.</p>
-            {/* Pre-populated so the screen is usable on the first visit rather
-                than a blank input. Suggestions are one-tap adds, never
-                pre-added — nobody should have to delete a bill they don't have. */}
-            <div className="pd__suggest">
-              {COMMON.filter((c) => !bills.some((b) => b.name === c)).map((c) => (
-                <button key={c} className="pd__chip" onClick={() => onAdd(c)}>{c}</button>
-              ))}
-            </div>
-          </>
+          <p className="muted">Nothing here yet. Tap what you pay.</p>
         )}
+
         {bills.map((b, i) => (
           <div key={`${b.name}-${i}`} className={'pd__bill' + (b.paid ? ' pd__bill--paid' : '')}>
             <button className="pd__tick" onClick={() => onToggle(i)} aria-pressed={b.paid}>
-              <span className="pd__name">{b.name}</span>
               <span className="pd__box" aria-hidden="true">
-                {b.paid && <Check size={24} strokeWidth={2} />}
+                {b.paid && <Check size={17} strokeWidth={3.2} />}
               </span>
+              <span className="pd__name">{b.name}</span>
             </button>
             {/* A mistyped bill would otherwise be permanent — there is no
                 other way to correct this screen. */}
@@ -89,6 +80,15 @@ export function Payday(
       </div>
 
       <div className="page__foot">
+        {/* Stays available as long as anything common is still unadded — the
+            first tap should not remove the rest of the shortcuts. */}
+        {COMMON.some((c) => !bills.some((b) => b.name === c)) && (
+          <div className="pd__suggest">
+            {COMMON.filter((c) => !bills.some((b) => b.name === c)).map((c) => (
+              <button key={c} className="pd__chip" onClick={() => onAdd(c)}>+ {c}</button>
+            ))}
+          </div>
+        )}
         <TextInput value={name} onChange={setName} onEnter={add}
           label="Bill name" placeholder="add a bill" />
       </div>

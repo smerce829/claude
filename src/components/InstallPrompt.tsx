@@ -48,9 +48,9 @@ export function InstallPrompt({ onSettled }: { onSettled: () => void }) {
           : 'Add this to your home screen so it opens like an app.'}
       </p>
       {isIOS && !deferred
-        ? <PrimaryButton onClick={onSettled}>got it</PrimaryButton>
-        : <PrimaryButton onClick={() => void install()}>add to home screen</PrimaryButton>}
-      <SecondaryAction onClick={onSettled}>not now</SecondaryAction>
+        ? <PrimaryButton onClick={onSettled}>Got it</PrimaryButton>
+        : <PrimaryButton onClick={() => void install()}>Add to home screen</PrimaryButton>}
+      <SecondaryAction onClick={onSettled}>Not now</SecondaryAction>
     </div>
   )
 }

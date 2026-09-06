@@ -1,15 +1,20 @@
+import { Check } from 'lucide-react'
 import { CompletionButton } from '../components/Controls'
 import './Complete.css'
 
-/**
- * One state. The only screen where lime appears.
- * No stats, no summary, no streak, no confetti. The reward is that it is over.
- */
-export function Complete({ onAgain }: { onAgain: () => void }) {
+export function Complete({ onAgain, streak }: { onAgain: () => void; streak: number }) {
   return (
-    <main className="complete">
-      <p className="complete__word">done</p>
-      <CompletionButton onClick={onAgain}>go again</CompletionButton>
+    <main className="page done">
+      <div className="page__fill">
+        <div className="done__mark" aria-hidden="true">
+          <Check size={44} strokeWidth={3} />
+        </div>
+        <h1 className="done__word">Done.</h1>
+        {streak > 1 && <p className="muted">{streak} days running.</p>}
+      </div>
+      <div className="page__foot">
+        <CompletionButton onClick={onAgain}>Go again</CompletionButton>
+      </div>
     </main>
   )
 }

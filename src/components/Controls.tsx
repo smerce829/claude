@@ -1,16 +1,21 @@
 import './Controls.css'
 
-export function PrimaryButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
-  return <button className="btn btn--primary" onClick={onClick}>{children}</button>
+type Tone = 'action' | 'success' | 'warn'
+
+export function PrimaryButton(
+  { children, onClick, tone = 'action' }:
+  { children: React.ReactNode; onClick: () => void; tone?: Tone },
+) {
+  return <button className={`btn btn--${tone}`} onClick={onClick}>{children}</button>
 }
 
-/** Lime. Completion screen only — lime on screen means something is over. */
+/** Kept as a named export so completion screens read as intent, not colour. */
 export function CompletionButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
-  return <button className="btn btn--completion" onClick={onClick}>{children}</button>
+  return <PrimaryButton tone="success" onClick={onClick}>{children}</PrimaryButton>
 }
 
 export function SecondaryAction({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
-  return <button className="btn btn--secondary" onClick={onClick}>{children}</button>
+  return <button className="btn btn--ghost" onClick={onClick}>{children}</button>
 }
 
 export function ChoiceTile(
@@ -18,7 +23,7 @@ export function ChoiceTile(
 ) {
   return (
     <button
-      className={'tile' + (selected ? ' tile--selected' : '')}
+      className={'pill' + (selected ? ' pill--on' : '')}
       onClick={onClick}
       aria-pressed={selected}
     >
@@ -27,6 +32,4 @@ export function ChoiceTile(
   )
 }
 
-export function Divider() {
-  return <hr className="divider" />
-}
+export function Divider() { return <hr className="rule" /> }

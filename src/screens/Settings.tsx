@@ -37,11 +37,11 @@ export function Settings(
       <div className="set__list">
         <button className="set__item" onClick={doExport}>
           <Download size={24} strokeWidth={2} aria-hidden="true" />
-          <span>export your data</span>
+          <span>Export your data</span>
         </button>
         <button className="set__item" onClick={() => file.current?.click()}>
           <Upload size={24} strokeWidth={2} aria-hidden="true" />
-          <span>import your data</span>
+          <span>Import your data</span>
         </button>
         <input
           ref={file}

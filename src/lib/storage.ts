@@ -7,7 +7,8 @@ function fresh(): State {
   return {
     license: { key: null, validatedAt: null },
     profile: { home: null, kids: false, pets: false, worksFromHome: false },
-    session: { lastTaskIds: [], completedToday: 0, lastCompletedDate: null },
+    session: { lastTaskIds: [], completedToday: 0, lastCompletedDate: null, streak: 0 },
+    ui: { lowEnergy: false },
     rooms: {},
     doompile: { name: null, items: [], deferred: [], deferredCap: 10 },
     payday: { cycle: null, bills: [], lastRun: null },
@@ -46,6 +47,7 @@ export function migrate(raw: unknown): State {
     license: { ...base.license, ...s.license },
     profile: { ...base.profile, ...s.profile },
     session: { ...base.session, ...s.session },
+    ui: { ...base.ui, ...s.ui },
     rooms: { ...base.rooms, ...s.rooms },
     doompile: { ...base.doompile, ...s.doompile },
     payday: { ...base.payday, ...s.payday },

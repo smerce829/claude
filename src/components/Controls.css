@@ -2,65 +2,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: var(--s-2);
   width: 100%;
   min-height: var(--target);
-  padding: 0 var(--s-4);
-  border-radius: var(--radius);
-  font-family: var(--font-text);
-  font-size: var(--type-control);
-  font-weight: 600;
+  padding: 0 var(--s-5);
+  border-radius: var(--r);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: 1;
-  transition: background-color var(--t-state) ease-out;
 }
 
-.btn--primary {
-  background: var(--purple);
-  /* #000000 in light mode: #232323 on #896CFE is 4.22:1 and fails AA. */
-  color: var(--ink-on-purple);
-}
-.btn--primary:active { background: var(--purple-light); }
+/* Every accent fill takes near-black ink. White on these hues measures
+   2.1-2.5:1 and fails AA; #04070d measures 8.6:1 on cyan. */
+.btn--action  { background: var(--cyan);    color: var(--on-accent);
+                box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--cyan) 85%, transparent); }
+.btn--success { background: var(--emerald); color: var(--on-accent);
+                box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--emerald) 85%, transparent); }
+.btn--warn    { background: var(--amber);   color: var(--on-accent);
+                box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--amber) 85%, transparent); }
 
-.btn--completion {
-  background: var(--lime);
-  color: var(--ink);
+.btn--ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--edge);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: none;
 }
-.btn--completion:active { opacity: 0.9; }
+.btn--ghost:active { background: rgba(255, 255, 255, 0.09); }
 
-.btn--secondary {
-  background: none;
-  color: var(--ink-muted);
-  font-family: var(--font-text);
-  font-size: var(--type-body);
-  font-weight: 400;
-  border-radius: 0;
-}
-
-.tile {
+.pill {
   flex: 1 1 0;
   min-width: 0;
-  height: 88px;
-  min-height: 88px;
-  border-radius: var(--radius);
-  /* --line measures 1.26:1 on --surface: an invisible boundary in the bad
-     light this app is built for. --ink-muted is 5.08:1 and already a token. */
-  border: 1px solid var(--ink-muted);
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--font-text);
-  font-size: var(--type-control);
-  font-weight: 600;
-  transition: background-color var(--t-state) ease-out;
+  min-height: 62px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r);
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
-.tile--selected {
-  background: var(--purple);
-  color: var(--ink-on-purple);
-  border-color: var(--purple);
+.pill--on {
+  background: color-mix(in srgb, var(--cyan) 20%, transparent);
+  border-color: var(--cyan-bright);
+  color: var(--cyan-bright);
+  box-shadow: 0 0 26px -6px color-mix(in srgb, var(--cyan) 75%, transparent);
 }
 
-.divider {
-  height: 1px;
-  border: 0;
-  margin: 0;
-  background: var(--line);
-}
+.rule { height: 1px; border: 0; margin: 0; background: var(--hairline); }

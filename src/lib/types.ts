@@ -20,7 +20,14 @@ export interface Bill {
 export interface State {
   license: { key: string | null; validatedAt: number | null }
   profile: { home: string | null; kids: boolean; pets: boolean; worksFromHome: boolean }
-  session: { lastTaskIds: string[]; completedToday: number; lastCompletedDate: string | null }
+  session: {
+    lastTaskIds: string[]
+    completedToday: number
+    lastCompletedDate: string | null
+    /** Consecutive days with at least one completion. */
+    streak: number
+  }
+  ui: { lowEnergy: boolean }
   rooms: Record<string, { lastReset: number | null; customTasks: string[] }>
   doompile: { name: string | null; items: string[]; deferred: string[]; deferredCap: number }
   payday: { cycle: number | null; bills: Bill[]; lastRun: number | null }

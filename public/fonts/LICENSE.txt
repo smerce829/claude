@@ -1,7 +1,6 @@
-Poppins and League Spartan are licensed under the SIL Open Font License 1.1.
-Poppins        — Indian Type Foundry, Jonny Pinhorn
-League Spartan — The League of Moveable Type
+Inter is licensed under the SIL Open Font License 1.1.
+Inter — Rasmus Andersson. https://rsms.me/inter/
 Full text: https://scripts.sil.org/OFL
 
 OFL permits self-hosting and redistribution with the software.
-Files here are the latin subset only, retrieved from Google Fonts.
+This is the latin subset, variable weight 400-800, from Google Fonts.

@@ -58,3 +58,15 @@ export function roomSet(room: string, profile: State['profile']): Task[] {
       r === 'kids' ? profile.kids : r === 'pets' ? profile.pets : profile.worksFromHome))
     .sort((a, b) => a.duration - b.duration)
 }
+
+/**
+ * Low-Energy mode shows three ready micro-actions instead of a chooser.
+ * Deterministic per profile so the set does not shuffle under the user.
+ */
+export function microTasks(profile: State['profile']): Task[] {
+  return TASKS
+    .filter((t) => t.energy === 'low' && t.duration === 5)
+    .filter((t) => !t.requires || t.requires.every((r) =>
+      r === 'kids' ? profile.kids : r === 'pets' ? profile.pets : profile.worksFromHome))
+    .slice(0, 3)
+}

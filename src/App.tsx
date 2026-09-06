@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { InstallPrompt } from './components/InstallPrompt'
+import { Header } from './components/Chrome'
+import { Dock } from './components/Dock'
 import { SecondaryAction } from './components/Controls'
 import { BrainDump, BrainDumpSort } from './screens/BrainDump'
 import { Complete } from './screens/Complete'
 import { DoomPileAdd, DoomPileName, DoomPileRun } from './screens/DoomPile'
 import { Gate } from './screens/Gate'
-import { Menu } from './screens/Menu'
 import { Payday } from './screens/Payday'
 import { Profile } from './screens/Profile'
 import { RoomReset } from './screens/RoomReset'
@@ -14,7 +15,8 @@ import { StartInput } from './screens/StartInput'
 import { TaskScreen } from './screens/TaskScreen'
 import { importJSON, load, save, saveNow } from './lib/storage'
 import { shouldReset } from './lib/payday'
-import { braindumpPool, pickTask, roomSet } from './lib/tasks'
+import { advanceStreak, liveStreak } from './lib/streak'
+import { braindumpPool, microTasks, pickTask, roomSet } from './lib/tasks'
 import { useTimer } from './lib/timer'
 import type { Duration, Energy, ResetDuration, State, Task } from './lib/types'
 import type { Screen } from './lib/types.nav'
@@ -40,6 +42,12 @@ export function App() {
   useEffect(() => { save(state) }, [state])
 
   useEffect(() => {
+    const root = document.documentElement
+    if (state.ui.lowEnergy) root.setAttribute('data-energy', 'low')
+    else root.removeAttribute('data-energy')
+  }, [state.ui.lowEnergy])
+
+  useEffect(() => {
     const flush = () => saveNow(state)
     window.addEventListener('pagehide', flush)
     return () => window.removeEventListener('pagehide', flush)
@@ -62,7 +70,7 @@ export function App() {
     }
   }, [state.braindump.todayDate, state.braindump.today.length])
 
-  const { fraction, expired } = useTimer(startedAt, durationMs)
+  const { fraction, expired, remaining } = useTimer(startedAt, durationMs)
 
   useEffect(() => {
     if (!expired) return
@@ -94,15 +102,7 @@ export function App() {
   const onSwap = () => { const c = choice.current; if (c) serve(c.energy, c.duration, false) }
 
   const countCompleted = () => {
-    const today = new Date().toDateString()
-    setState((s) => ({
-      ...s,
-      session: {
-        ...s.session,
-        completedToday: s.session.lastCompletedDate === today ? s.session.completedToday + 1 : 1,
-        lastCompletedDate: today,
-      },
-    }))
+    setState((s) => ({ ...s, session: advanceStreak(s.session) }))
   }
 
   const onDone = () => { countCompleted(); setStartedAt(null); setScreen('complete') }
@@ -170,6 +170,13 @@ export function App() {
 
   const toStart = () => setScreen('start')
 
+  const streak = liveStreak(state.session)
+  const micro = useMemo(() => microTasks(state.profile), [state.profile])
+
+  /* The gate and the one-time profile question run before the app chrome
+     exists, so neither shows the header or the dock. */
+  const chrome = screen !== 'gate' && screen !== 'profile'
+
   const canPromptInstall = useMemo(
     () => (screen === 'complete' || screen === 'room-done') &&
           state.session.completedToday > 0 && !state.meta.installPromptShown,
@@ -178,6 +185,15 @@ export function App() {
 
   return (
     <>
+      {chrome && (
+        <Header
+          lowEnergy={state.ui.lowEnergy}
+          streak={streak}
+          onToggle={() => setState((s) => ({ ...s, ui: { ...s.ui, lowEnergy: !s.ui.lowEnergy } }))}
+          onSettings={() => setScreen('settings')}
+        />
+      )}
+
       {screen === 'gate' && (
         <Gate onValid={(key) => {
           setState((s) => ({ ...s, license: { key, validatedAt: Date.now() } }))
@@ -197,26 +213,28 @@ export function App() {
       )}
 
       {screen === 'start' && (
-        <StartInput onStart={onStart} onElse={() => setScreen('menu')} />
+        <StartInput
+          onStart={onStart}
+          lowEnergy={state.ui.lowEnergy}
+          micro={micro}
+          onMicro={(t) => { setTask(t); setDurationMs(5 * 60_000); setStartedAt(Date.now()); setScreen('task') }}
+        />
       )}
 
       {screen === 'task' && task && (
-        <TaskScreen task={task} fraction={fraction} onDone={onDone} onSwap={onSwap} />
+        <TaskScreen task={task} fraction={fraction} remainingMs={remaining} onDone={onDone} onSwap={onSwap} />
       )}
 
-      {screen === 'complete' && <Complete onAgain={onAgain} />}
+      {screen === 'complete' && <Complete onAgain={onAgain} streak={streak} />}
 
-      {screen === 'menu' && (
-        <Menu onGo={(s) => setScreen(s)} onBack={toStart} />
-      )}
 
-      {screen === 'room' && <RoomReset onStart={startRoom} onBack={() => setScreen('menu')} />}
+      {screen === 'room' && <RoomReset onStart={startRoom} onBack={toStart} />}
 
       {screen === 'room-run' && set[step] && (
-        <TaskScreen task={set[step]} fraction={fraction} onDone={nextInSet} />
+        <TaskScreen task={set[step]} fraction={fraction} remainingMs={remaining} onDone={nextInSet} />
       )}
 
-      {screen === 'room-done' && <Complete onAgain={toStart} />}
+      {screen === 'room-done' && <Complete onAgain={toStart} streak={streak} />}
 
       {screen === 'doompile' && (
         <DoomPileName
@@ -224,7 +242,7 @@ export function App() {
             setState((s) => ({ ...s, doompile: { ...s.doompile, name, items: [] } }))
             setScreen('doompile-add')
           }}
-          onBack={() => setScreen('menu')}
+          onBack={toStart}
         />
       )}
 
@@ -243,11 +261,11 @@ export function App() {
           item={state.doompile.items[0]}
           deferredFull={state.doompile.deferred.length >= state.doompile.deferredCap}
           onDecide={decide}
-          onBack={() => setScreen('menu')}
+          onBack={toStart}
         />
       )}
 
-      {screen === 'doompile-done' && <Complete onAgain={toStart} />}
+      {screen === 'doompile-done' && <Complete onAgain={toStart} streak={streak} />}
 
       {screen === 'payday' && (
         <Payday
@@ -260,7 +278,7 @@ export function App() {
           }))}
           onAdd={(name) => setState((s) => ({ ...s, payday: { ...s.payday, bills: [...s.payday.bills, { name, paid: false }] } }))}
           onRemove={(i) => setState((s) => ({ ...s, payday: { ...s.payday, bills: s.payday.bills.filter((_, j) => j !== i) } }))}
-          onBack={() => setScreen('menu')}
+          onBack={toStart}
         />
       )}
 
@@ -269,7 +287,7 @@ export function App() {
           inbox={state.braindump.inbox}
           onAdd={(t) => setState((s) => ({ ...s, braindump: { ...s.braindump, inbox: [...s.braindump.inbox, t] } }))}
           onSort={() => setScreen('braindump-sort')}
-          onBack={() => setScreen('menu')}
+          onBack={toStart}
         />
       )}
 
@@ -279,11 +297,11 @@ export function App() {
           warnNever={!state.meta.neverWarningShown}
           onSort={sortItem}
           onAckWarning={() => setState((s) => ({ ...s, meta: { ...s.meta, neverWarningShown: true } }))}
-          onBack={() => setScreen('menu')}
+          onBack={toStart}
         />
       )}
 
-      {screen === 'braindump-done' && <Complete onAgain={toStart} />}
+      {screen === 'braindump-done' && <Complete onAgain={toStart} streak={streak} />}
 
       {screen === 'settings' && (
         <Settings
@@ -292,9 +310,11 @@ export function App() {
             try { setState(importJSON(text)); setScreen('start') }
             catch { /* Malformed file. Keep what is already here. */ }
           }}
-          onBack={() => setScreen('menu')}
+          onBack={toStart}
         />
       )}
+
+      {chrome && <Dock screen={screen} onGo={(t) => setScreen(t)} />}
 
       {canPromptInstall && (
         <InstallPrompt

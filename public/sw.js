@@ -2,16 +2,14 @@
    offline — a user opening it on the train is the normal case, not an edge one.
 
    Bump CACHE on every deploy; the old cache is deleted on activate. */
-const CACHE = 'adhdos-v1'
+const CACHE = 'adhdos-v2'
 
 const SHELL = [
   '/',
   '/index.html',
   '/manifest.json',
   '/fonts/fonts.css',
-  '/fonts/Poppins-500-latin.woff2',
-  '/fonts/Poppins-600-latin.woff2',
-  '/fonts/LeagueSpartan-var-latin.woff2',
+  '/fonts/Inter-var-latin.woff2',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
 ]

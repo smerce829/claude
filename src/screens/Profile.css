@@ -2,19 +2,20 @@
 
 .prof__tile {
   min-height: var(--target);
-  padding: 0 var(--s-4);
-  border-radius: var(--radius);
-  border: 1px solid var(--ink-muted);
-  background: transparent;
-  color: var(--ink);
-  font-size: var(--type-control);
-  font-weight: 600;
+  padding: 0 var(--s-5);
+  border-radius: var(--r);
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   text-align: left;
-  transition: background-color var(--t-state) ease-out;
 }
 
 .prof__tile--selected {
-  background: var(--purple);
-  color: var(--ink-on-purple);
-  border-color: var(--purple);
+  background: color-mix(in srgb, var(--cyan) 20%, transparent);
+  border-color: var(--cyan-bright);
+  color: var(--cyan-bright);
+  box-shadow: 0 0 26px -6px color-mix(in srgb, var(--cyan) 75%, transparent);
 }

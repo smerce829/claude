@@ -1,30 +1,26 @@
 import { useState } from 'react'
 import { PrimaryButton, SecondaryAction } from '../components/Controls'
-import { Back, ScreenTitle, TextInput } from '../components/Shell'
+import { Back, ScreenTitle, Steps, TextInput } from '../components/Shell'
 import './DoomPile.css'
 
-/** Entry: name the pile. */
 export function DoomPileName(
   { onNamed, onBack }: { onNamed: (name: string) => void; onBack: () => void },
 ) {
   const [name, setName] = useState('')
   const go = () => { if (name.trim()) onNamed(name.trim()) }
   return (
-    <div className="page">
+    <main className="page">
       <Back onBack={onBack} />
       <div className="page__fill">
         <ScreenTitle>Name the pile</ScreenTitle>
-        <TextInput value={name} onChange={setName} onEnter={go}
-          label="Pile name" placeholder="the chair" />
+        <p className="muted">The chair. The counter. That corner.</p>
+        <TextInput value={name} onChange={setName} onEnter={go} label="Pile name" placeholder="the chair" />
       </div>
-      <div className="page__foot">
-        <PrimaryButton onClick={go}>next</PrimaryButton>
-      </div>
-    </div>
+      <div className="page__foot"><PrimaryButton onClick={go}>Next</PrimaryButton></div>
+    </main>
   )
 }
 
-/** List what is in it, one line at a time. */
 export function DoomPileAdd(
   { name, items, onAdd, onStart, onBack }:
   { name: string; items: string[]; onAdd: (t: string) => void; onStart: () => void; onBack: () => void },
@@ -32,32 +28,33 @@ export function DoomPileAdd(
   const [text, setText] = useState('')
   const add = () => { if (text.trim()) { onAdd(text.trim()); setText('') } }
   return (
-    <div className="page">
+    <main className="page">
       <Back onBack={onBack} />
       <div className="page__fill">
-        <ScreenTitle>What's in {name}</ScreenTitle>
-        <TextInput value={text} onChange={setText} onEnter={add}
-          label="Item" placeholder="one thing" />
-        <p className="dp__count">
-          {items.length === 0 ? 'Nothing yet. Add something to start.' :
-            `${items.length} ${items.length === 1 ? 'thing' : 'things'}`}
-        </p>
+        <ScreenTitle>What's in {name}?</ScreenTitle>
+        <TextInput value={text} onChange={setText} onEnter={add} label="Item" placeholder="one thing" />
+        {items.length === 0
+          ? <p className="muted">Nothing yet. Add one thing to start.</p>
+          : <div className="dp__chips">
+              {items.map((it, i) => <span key={`${it}-${i}`} className="dp__chip">{it}</span>)}
+            </div>}
       </div>
       <div className="page__foot">
         <PrimaryButton onClick={items.length > 0 ? onStart : add}>
-          {items.length > 0 ? 'start sorting' : 'add'}
+          {items.length > 0 ? `Sort ${items.length}` : 'Add'}
         </PrimaryButton>
       </div>
-    </div>
+    </main>
   )
 }
 
 /**
- * One item at a time, four decisions. All four are secondary style: none is
- * primary, because none is the right answer.
+ * Two binary questions resolve to the same four outcomes the engine already
+ * stores, so the decision logic and the deferral cap are unchanged — only the
+ * way the question is asked has changed.
  *
- * The deferred pile is hard-capped. When it is full the refusal is specific,
- * and it is never made configurable — the constraint is the product.
+ *   1. Trash, or keep it?          -> bin | continue
+ *   2. Lives here, or elsewhere?   -> keep | relocate
  */
 export function DoomPileRun(
   { item, deferredFull, onDecide, onBack }:
@@ -68,32 +65,69 @@ export function DoomPileRun(
     onBack: () => void
   },
 ) {
+  const [step, setStep] = useState<1 | 2>(1)
   const [refused, setRefused] = useState(false)
+  const [leaving, setLeaving] = useState(false)
+
+  const settle = (d: 'keep' | 'bin' | 'relocate') => {
+    setLeaving(true)
+    window.setTimeout(() => { setLeaving(false); setStep(1); setRefused(false); onDecide(d) }, 160)
+  }
 
   const later = () => {
     if (deferredFull) { setRefused(true); return }
-    setRefused(false)
-    onDecide('later')
+    setRefused(false); setStep(1); onDecide('later')
   }
-  const decide = (d: 'keep' | 'bin' | 'relocate') => { setRefused(false); onDecide(d) }
 
   return (
-    <div className="page">
-      <Back onBack={onBack} />
+    <main className="page dp">
+      <div className="dp__top">
+        <Back onBack={onBack} />
+        <Steps current={step} total={2} />
+      </div>
+
       <div className="page__fill">
-        <ScreenTitle>{item}</ScreenTitle>
+        <div className={'dp__card glass' + (leaving ? ' dp__card--out' : '')} key={item + step}>
+          <p className="dp__item">{item}</p>
+          <p className="dp__q">{step === 1 ? 'Is it rubbish?' : 'Does it live in this room?'}</p>
+        </div>
+
         {refused && (
           <p className="dp__refused">
-            The deferred pile is full. Clear one to defer another.
+            Deferred pile is full. Clear one to defer another.
           </p>
         )}
+
+        <div className="dp__choices">
+          {step === 1 ? (
+            <>
+              <button className="dp__choice dp__choice--no" onClick={() => settle('bin')}>
+                <span className="dp__emoji" aria-hidden="true">🗑️</span>
+                <span>Trash</span>
+              </button>
+              <button className="dp__choice dp__choice--yes" onClick={() => setStep(2)}>
+                <span className="dp__emoji" aria-hidden="true">📦</span>
+                <span>Keep</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="dp__choice dp__choice--yes" onClick={() => settle('keep')}>
+                <span className="dp__emoji" aria-hidden="true">🏠</span>
+                <span>Lives here</span>
+              </button>
+              <button className="dp__choice dp__choice--no" onClick={() => settle('relocate')}>
+                <span className="dp__emoji" aria-hidden="true">📍</span>
+                <span>Elsewhere</span>
+              </button>
+            </>
+          )}
+        </div>
       </div>
-      <div className="dp__grid">
-        <SecondaryAction onClick={() => decide('keep')}>keep</SecondaryAction>
-        <SecondaryAction onClick={() => decide('bin')}>bin</SecondaryAction>
-        <SecondaryAction onClick={() => decide('relocate')}>relocate</SecondaryAction>
-        <SecondaryAction onClick={later}>decide later</SecondaryAction>
+
+      <div className="page__foot">
+        <SecondaryAction onClick={later}>Decide later</SecondaryAction>
       </div>
-    </div>
+    </main>
   )
 }
