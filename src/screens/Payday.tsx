@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Check, X } from 'lucide-react'
+import { IconCheck, IconClose } from '../components/Icons'
 import { ChoiceTile, PrimaryButton } from '../components/Controls'
 import { Back, ScreenTitle, TextInput } from '../components/Shell'
 import { FREQUENCY_TILES, formatCycle, visibleBills } from '../lib/payday'
@@ -18,11 +18,11 @@ function Row(
       <button className="pd__tick" onClick={onToggle} aria-pressed={bill.checked}>
         <span className="pd__name">{bill.name}</span>
         <span className="pd__box" aria-hidden="true">
-          {bill.checked && <Check size={24} strokeWidth={2} />}
+          {bill.checked && <IconCheck size={24} />}
         </span>
       </button>
       <button className="pd__remove" onClick={onRemove} aria-label={`Remove ${bill.name}`}>
-        <X size={24} strokeWidth={2} aria-hidden="true" />
+        <IconClose size={24} />
       </button>
     </div>
   )
@@ -112,7 +112,7 @@ export function Payday(
           <Row key={b.name} bill={b} onToggle={() => onToggle(b.name)} onRemove={() => onRemove(b.name)} />
         ))}
         {carried.length === 0 && due.length === 0 && (
-          <p className="pd__hint">Nothing due. Add a bill to start.</p>
+          <p className="label">Nothing due &middot; tap what you pay</p>
         )}
       </div>
 

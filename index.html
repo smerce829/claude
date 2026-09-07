@@ -3,26 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Start</title>
+    <title>Nowline</title>
 
     <!-- iOS ignores the manifest for these. -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Start" />
+    <meta name="apple-mobile-web-app-title" content="Nowline" />
     <link rel="apple-touch-icon" href="/icons/icon-192.png" />
 
     <meta name="theme-color" content="#0A1017" />
     <meta name="color-scheme" content="dark" />
 
     <link rel="manifest" href="/manifest.json" />
-    <link rel="icon" href="/icons/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
 
-    <!-- Self-hosted. Preloaded because the task text is the screen. -->
-    <link rel="preload" href="/fonts/Poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/SpaceGrotesk-var-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/LeagueSpartan-var-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/fonts/fonts.css" />
+
+    <style>
+      /* Splash. The mark on the ground, nothing else — no tagline, no
+         spinner: the shell parses in a few hundred milliseconds and
+         inventing a loader for that would be inventing a delay. It exists
+         only to stop a bare white frame before the app paints. */
+      html, body { margin: 0; height: 100%; background: #0A1017; }
+      #splash {
+        position: fixed; inset: 0; z-index: 100;
+        display: grid; place-items: center;
+        background: #0A1017;
+      }
+      #splash.gone { display: none; }
+    </style>
   </head>
   <body>
+    <div id="splash">
+      <svg width="72" height="72" viewBox="0 0 100 100" aria-label="Nowline" role="img">
+        <path d="M 25.96 25.96 A 34 34 0 1 1 17.16 58.8"
+              fill="none" stroke="#22D3EE" stroke-width="7" />
+        <circle cx="82.84" cy="58.8" r="6" fill="#E2F163" />
+      </svg>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

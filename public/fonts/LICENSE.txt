@@ -1,7 +1,8 @@
-Poppins and League Spartan are licensed under the SIL Open Font License 1.1.
-Poppins        — Indian Type Foundry, Jonny Pinhorn
+Space Grotesk and League Spartan are licensed under the SIL Open Font
+License 1.1, which permits self-hosting and redistribution with the software.
+
+Space Grotesk  — Florian Karsten
 League Spartan — The League of Moveable Type
 Full text: https://scripts.sil.org/OFL
 
-OFL permits self-hosting and redistribution with the software.
-Files here are the latin subset only, retrieved from Google Fonts.
+Latin subsets, retrieved from Google Fonts.

@@ -54,7 +54,7 @@ rather than per-repo:
 To update the vendored copy, re-clone upstream and replace `.claude/skills/`.
 
 
-## ADHD Life OS — deploying
+## Nowline — deploying
 
 Build, then upload `dist/` into `public_html/`.
 
@@ -77,10 +77,14 @@ Whop API key and proxies the check. It ships in `dist/api/`.
 `config.php` is gitignored and blocked by `api/.htaccess`, so the key never
 reaches the repository and is never served.
 
-Without `config.php` the endpoint answers 503, which the app reports as "the
-check couldn't run" with a retry — it never rejects anyone. That is deliberate:
-a paying customer must not be locked out by a misconfigured deploy. It also
-means **the gate is open until you add the key**, so do step 3 before launch.
+Without `config.php` the endpoint answers 503 with `error: unconfigured`, and
+the app shows a "this install is not finished" screen and lets nobody through.
+That is deliberate: an unfinished deploy must not ship an open paywall.
+
+A genuine network failure is a different case and is treated differently — a
+timeout, a 500, an unreachable upstream or a dropped connection all offer a
+retry and never reject anyone, because a paying customer must not be locked
+out because their wifi dropped.
 
 The endpoint calls `POST https://api.whop.com/api/v2/memberships/{key}/validate_license`
 with empty metadata. Whop uses metadata to bind a licence to a device; the spec

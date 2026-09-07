@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { PrimaryButton } from '../components/Controls'
-import { ScreenTitle } from '../components/Shell'
+import { Mark } from '../components/Mark'
 import './Profile.css'
 
 /**
@@ -22,9 +22,12 @@ export function Profile({ onDone }: { onDone: (p: { kids: boolean; pets: boolean
   const flip = (k: 'kids' | 'pets' | 'wfh') => setOn((s) => ({ ...s, [k]: !s[k] }))
 
   return (
-    <main className="page">
-      <div className="page__fill">
-        <ScreenTitle>Any of these yours</ScreenTitle>
+    <main className="prof">
+      <div className="prof__body">
+        <Mark size={36} />
+        <p className="label">setup</p>
+        <h1 className="prof__title">Any of these yours?</h1>
+        <p className="prof__text">Tap what applies. It only changes which tasks you get.</p>
         <div className="prof__row" role="group" aria-label="Living situation">
           {OPTIONS.map((o) => (
             <button

@@ -15,11 +15,14 @@ await p.goto(B,{waitUntil:'networkidle'})
 ok('gate is first screen', await p.getByText('Paste your key').isVisible())
 
 // Invalid key -> specific error, not generic
+// A malformed key is knowable without a round trip, and now gets its own
+// screen rather than red text under the field.
 await p.locator('.gate__input').fill('nope')
 await p.getByRole('button',{name:'start'}).click()
-await p.waitForTimeout(200)
-const invalidMsg = await p.locator('.gate__error').textContent()
-ok('invalid key gives specific error', /wasn't recognised/.test(invalidMsg||''), JSON.stringify(invalidMsg))
+await p.waitForTimeout(350)
+const failLabel = await p.locator('.err .label').textContent().catch(()=>'')
+ok('invalid key gets its own labelled screen', failLabel==='not allowed', JSON.stringify(failLabel))
+await p.getByRole('button',{name:'use a different key'}).click(); await p.waitForTimeout(300)
 
 // Valid-shaped key passes
 await p.locator('.gate__input').fill('ABCD12-EFGH34-IJKL56')

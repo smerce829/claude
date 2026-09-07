@@ -1,4 +1,4 @@
-/* ADHD Life OS — instrument system.
+/* Nowline — instrument system.
    Dark only. Cyan on navy. No gradients, no shadows, no cards, no blur.
 
    Two accents, one meaning each, never on screen together:
@@ -32,7 +32,7 @@
   /* Two sizes carry the system: the task, set very large, and everything
      else, set small. Never introduce an intermediate size to balance a
      screen — that jump is the design. */
-  --type-task:    clamp(34px, 9.2vw, 44px);
+  --type-task:    clamp(33px, 8.9vw, 43px);
   --type-title:   24px;
   --type-body:    17px;
   --type-control: 17px;
@@ -40,7 +40,7 @@
   /* Instrument labels: small, spaced, uppercase. The one place caps are used. */
   --type-label:   11px;
 
-  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-text:    'League Spartan', system-ui, sans-serif;
 
   --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px;
@@ -53,6 +53,12 @@
   --t-state:  120ms;
   --t-screen: 200ms;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Press is asymmetric on purpose: the control takes the finger almost
+     instantly and lets go unhurriedly. Symmetric timing reads as a repaint;
+     fast-in / slow-out reads as a response. */
+  --t-press-in:  60ms;
+  --t-press-out: 220ms;
+  --ease-press:  cubic-bezier(0.2, 0, 0, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -87,11 +93,14 @@ button {
   border: none;
   cursor: pointer;
   min-height: var(--target);
-  /* Instant on press, unhurried on release: the press should feel like the
-     control answering, not like an animation starting. */
-  transition: background-color var(--t-state) var(--ease-out),
-              border-color var(--t-state) var(--ease-out),
-              color var(--t-state) var(--ease-out);
+  /* Release timing. :active swaps to the fast-in curve below. */
+  transition: background-color var(--t-press-out) var(--ease-press),
+              border-color var(--t-press-out) var(--ease-press),
+              color var(--t-press-out) var(--ease-press);
+}
+
+button:active {
+  transition-duration: var(--t-press-in);
 }
 
 input {
@@ -127,4 +136,33 @@ input {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+
+/* ---- Screen transitions ----
+   200ms horizontal slide. Forward moves in from the right, back from the
+   left, so the flow has a direction instead of cutting. Only the incoming
+   screen animates: animating both doubles the motion for no extra meaning. */
+/* The wrapper has to be a flex child itself, or every screen's own `flex: 1`
+   has nothing to stretch against and content collapses to the top. */
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  animation: screen-in var(--t-screen) var(--ease-out) both;
+}
+.screen--back { animation-name: screen-back; }
+
+@keyframes screen-in {
+  from { transform: translate3d(18px, 0, 0); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+@keyframes screen-back {
+  from { transform: translate3d(-18px, 0, 0); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen, .screen--back { animation: none; }
 }

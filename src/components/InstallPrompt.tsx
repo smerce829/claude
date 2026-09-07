@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Share } from 'lucide-react'
+import { IconShare } from './Icons'
 import { PrimaryButton, SecondaryAction } from './Controls'
 import './InstallPrompt.css'
 
@@ -47,7 +47,7 @@ export function InstallPrompt({ onSettled }: { onSettled: () => void }) {
         <p className="install__text">
           {/* Spec 3 asks for a share glyph here specifically; it is the one
               icon outside the section 6.5 set, and it replaces a word. */}
-          Add this to your home screen: tap <Share size={20} strokeWidth={2}
+          Add this to your home screen: tap <IconShare size={20}
             className="install__glyph" aria-label="Share" />, then add to home screen.
         </p>
       ) : (

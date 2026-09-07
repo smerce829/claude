@@ -29,6 +29,7 @@ export function App() {
     return s.meta.profileSet ? 'start' : 'profile'
   })
 
+  const [dir, setDir] = useState<'fwd' | 'back'>('fwd')
   const [task, setTask] = useState<Task | null>(null)
   const [startedAt, setStartedAt] = useState<number | null>(null)
   const [durationMs, setDurationMs] = useState(0)
@@ -189,7 +190,8 @@ export function App() {
 
   /* ---------------- Shell ---------------- */
 
-  const toStart = () => setScreen('start')
+  const go = (to: Screen, back = false) => { setDir(back ? 'back' : 'fwd'); setScreen(to) }
+  const toStart = () => go('start', true)
 
   /* Data-loss nudge. All state lives only in this browser, so a long gap
      since the last export with real data on board earns one offer per
@@ -217,7 +219,7 @@ export function App() {
   )
 
   return (
-    <>
+    <div className={'screen' + (dir === 'back' ? ' screen--back' : '')} key={screen}>
       {screen === 'gate' && (
         <Gate onValid={(key) => {
           setState((s) => ({ ...s, license: { key, validatedAt: Date.now() } }))
@@ -237,7 +239,7 @@ export function App() {
       )}
 
       {screen === 'start' && (
-        <StartInput onStart={onStart} onElse={() => setScreen('menu')} />
+        <StartInput onStart={onStart} onElse={() => go('menu')} />
       )}
 
       {screen === 'task' && task && (
@@ -247,10 +249,10 @@ export function App() {
       {screen === 'complete' && <><TimerBar fraction={1} finished /><Complete onAgain={onAgain} nudgeBackup={nudgeBackup} onBackup={takeBackup} /></>}
 
       {screen === 'menu' && (
-        <Menu onGo={(s) => setScreen(s)} onBack={toStart} />
+        <Menu onGo={(t) => go(t)} onBack={toStart} />
       )}
 
-      {screen === 'room' && <RoomReset onStart={startRoom} onBack={() => setScreen('menu')} />}
+      {screen === 'room' && <RoomReset onStart={startRoom} onBack={() => go('menu', true)} />}
 
       {screen === 'room-run' && set[step] && (
         <TaskScreen task={set[step]} fraction={fraction} onDone={nextInSet} />
@@ -266,7 +268,7 @@ export function App() {
             setState((s) => ({ ...s, doompile: { ...s.doompile, name, items: [] } }))
             setScreen('doompile-add')
           }}
-          onBack={() => setScreen('menu')}
+          onBack={() => go('menu', true)}
         />
       )}
 
@@ -276,7 +278,7 @@ export function App() {
           items={state.doompile.items}
           onAdd={(t) => setState((s) => ({ ...s, doompile: { ...s.doompile, items: [...s.doompile.items, t] } }))}
           onStart={() => setScreen('doompile-run')}
-          onBack={() => setScreen('doompile')}
+          onBack={() => go('doompile', true)}
         />
       )}
 
@@ -285,7 +287,7 @@ export function App() {
           item={state.doompile.items[0]}
           deferredFull={state.doompile.deferred.length >= state.doompile.deferredCap}
           onDecide={decide}
-          onBack={() => setScreen('menu')}
+          onBack={() => go('menu', true)}
         />
       )}
 
@@ -301,7 +303,7 @@ export function App() {
             }))
             if (state.doompile.deferred.length <= 1) setScreen('doompile')
           }}
-          onBack={() => setScreen('doompile')}
+          onBack={() => go('doompile', true)}
         />
       )}
 
@@ -344,7 +346,7 @@ export function App() {
               carryover: s.payday.carryover.filter((n) => n !== name),
             },
           }))}
-          onBack={() => setScreen('menu')}
+          onBack={() => go('menu', true)}
         />
       )}
 
@@ -353,7 +355,7 @@ export function App() {
           inbox={state.braindump.inbox}
           onAdd={(t) => setState((s) => ({ ...s, braindump: { ...s.braindump, inbox: [...s.braindump.inbox, t] } }))}
           onSort={() => setScreen('braindump-sort')}
-          onBack={() => setScreen('menu')}
+          onBack={() => go('menu', true)}
         />
       )}
 
@@ -363,7 +365,7 @@ export function App() {
           warnNever={!state.meta.neverWarningShown}
           onSort={sortItem}
           onAckWarning={() => setState((s) => ({ ...s, meta: { ...s.meta, neverWarningShown: true } }))}
-          onBack={() => setScreen('menu')}
+          onBack={() => go('menu', true)}
         />
       )}
 
@@ -377,7 +379,7 @@ export function App() {
             try { setState(importJSON(text)); setScreen('start') }
             catch { /* Malformed file. Keep what is already here. */ }
           }}
-          onBack={() => setScreen('menu')}
+          onBack={() => go('menu', true)}
         />
       )}
 
@@ -386,7 +388,7 @@ export function App() {
           onSettled={() => setState((s) => ({ ...s, meta: { ...s.meta, installPromptShown: true } }))}
         />
       )}
-    </>
+    </div>
   )
 }
 

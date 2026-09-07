@@ -18,6 +18,10 @@ export type Result =
   | { ok: true }
   | { ok: false; reason: 'invalid' }
   | { ok: false; reason: 'network' }
+  /* The endpoint is reachable but has no key configured. That is a broken
+     deploy, not a customer problem — and treating it as "retry" would mean
+     shipping a paywall that lets everyone through. It gets its own state. */
+  | { ok: false; reason: 'unconfigured' }
 
 /** Whop keys look like XXXXXX-XXXXXX-XXXXXX. */
 const SHAPE = /^[A-Za-z0-9]{4,}(-[A-Za-z0-9]{4,}){1,4}$/
@@ -37,6 +41,11 @@ export async function validateLicense(key: string): Promise<Result> {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ key: trimmed }),
     })
+    if (res.status === 503) {
+      const body = await res.json().catch(() => null) as { error?: string } | null
+      if (body?.error === 'unconfigured') return { ok: false, reason: 'unconfigured' }
+      return { ok: false, reason: 'network' }
+    }
     if (!res.ok) return { ok: false, reason: 'network' }
 
     const data = (await res.json()) as { valid?: unknown }

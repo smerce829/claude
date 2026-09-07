@@ -1,14 +1,18 @@
-/* Anchored low. The tiles are the only thing on the screen and they belong
-   in reach of a thumb, not floating in the optical centre. */
+/* Anchored low: the tiles belong in thumb reach, not the optical centre.
+   The space above them is held at a stated ratio rather than being whatever
+   flex has left over — 3fr above, content below. That is the difference
+   between negative space and unused space; the proportion is the design. */
 .start {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-rows: 3fr auto;
   gap: var(--s-6);
   padding: var(--s-5) var(--pad) var(--s-7);
   padding-bottom: calc(var(--s-7) + env(safe-area-inset-bottom));
 }
+
+.start__void { min-height: var(--s-6); }
+.start__groups { display: flex; flex-direction: column; gap: var(--s-6); }
 
 .start__group { display: flex; flex-direction: column; gap: var(--s-3); }
 .start__row { display: flex; gap: var(--s-3); }

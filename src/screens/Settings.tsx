@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Download, Upload } from 'lucide-react'
+import { IconExport, IconImport } from '../components/Icons'
 import { Back } from '../components/Shell'
 import { exportJSON } from '../lib/storage'
 import type { State } from '../lib/types'
@@ -37,11 +37,11 @@ export function Settings(
       <Back onBack={onBack} />
       <div className="set__list">
         <button className="set__item" onClick={doExport}>
-          <Download size={24} strokeWidth={2} aria-hidden="true" />
+          <IconExport size={24} />
           <span>export your data</span>
         </button>
         <button className="set__item" onClick={() => file.current?.click()}>
-          <Upload size={24} strokeWidth={2} aria-hidden="true" />
+          <IconImport size={24} />
           <span>import your data</span>
         </button>
         <input

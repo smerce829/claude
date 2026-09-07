@@ -15,13 +15,17 @@
   color: var(--danger);
 }
 
-/* Four decisions, equal weight — none is the right answer. Equal weight is
-   not the same as equal blandness: each is a real bordered target. */
-.dp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
-.dp__grid--three { grid-template-columns: 1fr; }
+/* Four decisions, equal weight — none of them is the right answer, so none
+   may outrank the others. They are differentiated by geometry alone: every
+   one is the same size, the same colour, the same type weight, and the only
+   thing that changes is which corners are square.
+   Read as a set, the four square corners meet in the middle, so the block
+   reads as one control with four quadrants rather than four loose buttons. */
+.dp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+.dp__grid--three { grid-template-columns: 1fr; gap: var(--s-3); }
 
 .dp__grid .btn--secondary {
-  min-height: 72px;
+  min-height: 78px;
   border: 1px solid var(--edge);
   border-radius: var(--radius);
   color: var(--ink);
@@ -29,4 +33,15 @@
   font-size: var(--type-control);
   font-weight: 600;
 }
-.dp__grid .btn--secondary:active { background: var(--panel); border-color: var(--ink-muted); }
+.dp__grid .btn--secondary:nth-child(1) { border-bottom-right-radius: 0; }
+.dp__grid .btn--secondary:nth-child(2) { border-bottom-left-radius: 0; }
+.dp__grid .btn--secondary:nth-child(3) { border-top-right-radius: 0; }
+.dp__grid .btn--secondary:nth-child(4) { border-top-left-radius: 0; }
+.dp__grid--three .btn--secondary { border-radius: var(--radius); }
+
+.dp__grid .btn--secondary:active {
+  background: var(--panel);
+  border-color: var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: -2px;
+}

@@ -9,15 +9,15 @@
     "preview": "vite preview",
     "test:acceptance": "node test/acceptance.mjs",
     "test:modules": "node test/modules.mjs",
-    "test": "node test/payday.mjs && node test/license.mjs && node test/acceptance.mjs && node test/modules.mjs && node test/profile.mjs && node test/v6.mjs",
+    "test": "node test/payday.mjs && node test/license.mjs && node test/brand.mjs && node test/acceptance.mjs && node test/modules.mjs && node test/profile.mjs && node test/v6.mjs",
     "test:profile": "node test/profile.mjs",
     "test:v6": "node test/v6.mjs",
     "test:payday": "node test/payday.mjs",
     "build:preview": "tsc -b && vite build --mode preview",
-    "test:license": "node test/license.mjs"
+    "test:license": "node test/license.mjs",
+    "test:brand": "node test/brand.mjs"
   },
   "dependencies": {
-    "lucide-react": "^1.41.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

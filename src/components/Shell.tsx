@@ -1,4 +1,4 @@
-import { ChevronLeft } from 'lucide-react'
+import { IconBack } from './Icons'
 import './Shell.css'
 
 /**
@@ -8,7 +8,7 @@ import './Shell.css'
 export function Back({ onBack }: { onBack: () => void }) {
   return (
     <button className="back" onClick={onBack} aria-label="Back">
-      <ChevronLeft size={24} strokeWidth={2} aria-hidden="true" />
+      <IconBack size={24} />
     </button>
   )
 }

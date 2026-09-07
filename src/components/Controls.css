@@ -15,11 +15,15 @@
 
 /* Cyan means time is passing, so it carries the primary action too. */
 .btn--primary { background: var(--cyan); color: var(--on-accent); }
-.btn--primary:active { background: var(--cyan-press); }
+.btn--primary:active {
+  background: var(--cyan-press);
+  outline: 2px solid var(--on-accent);
+  outline-offset: -3px;
+}
 
 /* The only lime in the app. */
 .btn--completion { background: var(--lime); color: var(--on-accent); }
-.btn--completion:active { opacity: 0.86; }
+.btn--completion:active { outline: 2px solid var(--on-accent); outline-offset: -3px; }
 
 /* Text only. It should read as available, not as a second button. */
 .btn--secondary {
@@ -48,7 +52,14 @@
   font-variant-numeric: tabular-nums;
 }
 /* Pressed, not selected: the control answering the finger. */
-.tile:active { background: var(--panel); border-color: var(--ink-muted); }
+.tile:active {
+  background: var(--panel);
+  border-color: var(--ink);
+  /* The boundary thickens under the finger. An inset ring rather than a
+     border-width change, so nothing reflows. No scale transform, per spec. */
+  outline: 1px solid var(--ink);
+  outline-offset: -2px;
+}
 
 .tile--selected {
   background: var(--cyan);

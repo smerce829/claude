@@ -22,7 +22,7 @@ export function BrainDump(
         <TextInput value={text} onChange={setText} onEnter={add}
           label="One thing" placeholder="one thing" />
         <p className="bd__count">
-          {inbox.length === 0 ? 'Nothing yet. Add something to start.' :
+          {inbox.length === 0 ? 'Nothing yet \u00b7 add one thing to start' :
             `${inbox.length} ${inbox.length === 1 ? 'thing' : 'things'}`}
         </p>
       </div>

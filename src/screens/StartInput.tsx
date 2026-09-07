@@ -35,6 +35,9 @@ export function StartInput(
 
   return (
     <main className="start">
+      {/* The held space above the controls. Empty on purpose, and sized. */}
+      <div className="start__void" aria-hidden="true" />
+      <div className="start__groups">
       <div className="start__group">
         <p className="label">energy</p>
         <div className="start__row" role="group" aria-label="energy">
@@ -59,6 +62,7 @@ export function StartInput(
           screen bare, and section 9 forbids a home screen, so this is one
           secondary action rather than a nav bar. */}
       <SecondaryAction onClick={onElse}>something else</SecondaryAction>
+      </div>
     </main>
   )
 }
