@@ -8,6 +8,7 @@ let p
 
 const fresh = async (seed) => {
   const ctx = await b.newContext({ viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true })
+  await ctx.route('**/api/validate.php', r => r.fulfill({ status: 200, contentType: 'application/json', body: '{"valid":true}' }))
   if (seed) {
     await ctx.addInitScript((s) => {
       if (!localStorage.getItem('adhdos:v1')) localStorage.setItem('adhdos:v1', JSON.stringify(s))
@@ -131,6 +132,26 @@ ok('no amounts or totals anywhere', !/\$|total|budget/i.test(await p.locator('.p
 console.log('\n=== §8 COPY ===')
 ok('no exclamation marks', !(await p.locator('.page').innerText()).includes('!'))
 ok('the word ADHD never appears in the app', !/adhd/i.test(await p.evaluate(() => document.body.innerText)))
+
+console.log('\n=== §10.9 EVERY ROOM HAS A SEQUENCE ===')
+await fresh()
+await p.getByRole('button', { name: 'something else' }).click(); await p.waitForTimeout(200)
+await p.getByRole('button', { name: 'reset a room' }).click(); await p.waitForTimeout(200)
+const rooms = await p.locator('.rr__room').allTextContents()
+ok('six rooms offered', rooms.length === 6, rooms.join(', '))
+for (const room of rooms) {
+  await p.getByRole('button', { name: room, exact: true }).click()
+  await p.getByRole('button', { name: '20 min', exact: true }).click()
+  await p.waitForSelector('.task__text', { timeout: 3000 })
+  const first = (await p.locator('.task__text').textContent()) || ''
+  await p.getByRole('button', { name: 'done' }).click(); await p.waitForTimeout(200)
+  const second = (await p.locator('.task__text').textContent()) || ''
+  ok(`${room}: sequenced and advances`,
+    first.length > 0 && second.length > 0 && first !== second, `${first} -> ${second}`)
+  await p.goto(B, { waitUntil: 'networkidle' }); await p.waitForTimeout(200)
+  await p.getByRole('button', { name: 'something else' }).click(); await p.waitForTimeout(150)
+  await p.getByRole('button', { name: 'reset a room' }).click(); await p.waitForTimeout(150)
+}
 
 ok('no console or page errors', errs.length === 0, errs.join(' | '))
 await b.close()

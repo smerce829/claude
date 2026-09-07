@@ -9,6 +9,7 @@ const GATED = ["Refill the pet's water bowl", 'Put one toy in its bin']
 
 async function session(pick) {
   const ctx = await b.newContext({viewport:{width:375,height:667}})
+  await ctx.route('**/api/validate.php', r => r.fulfill({status:200,contentType:'application/json',body:'{"valid":true}'}))
   const p = await ctx.newPage()
   await p.goto(B,{waitUntil:'networkidle'})
   await p.locator('.gate__input').fill('ABCD12-EFGH34-IJKL56')
@@ -36,6 +37,7 @@ async function draw(p, n) {
 console.log('\n=== PROFILE IS ASKED ONCE ===')
 {
   const ctx = await b.newContext({viewport:{width:375,height:667}})
+  await ctx.route('**/api/validate.php', r => r.fulfill({status:200,contentType:'application/json',body:'{"valid":true}'}))
   const p = await ctx.newPage()
   await p.goto(B,{waitUntil:'networkidle'})
   await p.locator('.gate__input').fill('ABCD12-EFGH34-IJKL56')

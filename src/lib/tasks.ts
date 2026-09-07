@@ -52,12 +52,13 @@ export function nextUntagged(
 export const isBrainDumpTask = (t: Task) => t.id.startsWith('bd:')
 export const brainDumpText = (t: Task) => t.id.slice(3)
 
-/** Rooms with a drafted sequence. The rest join the post-launch content pass. */
-export const ROOMS = ['kitchen', 'bathroom']
+export const ROOMS = ['kitchen', 'bathroom', 'bedroom', 'living room', 'entryway', 'laundry']
 
 /**
- * Sequenced sets, drafted per spec 7.2. Each longer duration extends the
- * shorter one rather than replacing it.
+ * Sequenced sets. Kitchen and bathroom are the spec 7.2 drafts verbatim; the
+ * remaining four follow the same shape — each longer duration extends the
+ * shorter one rather than replacing it, shortest and most visible first, and
+ * every step is one action on one object in under nine words.
  */
 const SEQUENCES: Record<string, Record<number, string[]>> = {
   kitchen: {
@@ -74,6 +75,38 @@ const SEQUENCES: Record<string, Record<number, string[]>> = {
     20: [
       'Scrub the toilet', 'Mop the floor', 'Restock the toilet paper',
       'Wipe the light switch', 'Organize the drawer',
+    ],
+  },
+  bedroom: {
+    5: ['Make the bed', 'Put the clothes in the hamper', 'Clear the nightstand'],
+    10: ['Put away the clothes on the chair', 'Clear the floor', 'Straighten the dresser top'],
+    20: [
+      'Change the sheets', 'Vacuum the floor', 'Sort one dresser drawer',
+      'Clear under the bed', 'Wipe the mirror', 'Empty the trash',
+    ],
+  },
+  'living room': {
+    5: ['Clear the coffee table', 'Straighten the cushions', 'Put the remotes back'],
+    10: ['Put away anything out of place', 'Fold the throw blankets', 'Clear the side tables'],
+    20: [
+      'Vacuum the floor', 'Wipe the coffee table', 'Dust the shelves',
+      'Sort the mail pile', 'Wipe the TV screen', 'Straighten the rug',
+    ],
+  },
+  entryway: {
+    5: ['Line up the shoes', 'Hang up the coats', 'Clear the console table'],
+    10: ['Sort the mail into two piles', 'Shake out the doormat', 'Empty the key bowl'],
+    20: [
+      'Sweep the floor', 'Wipe the door handles', 'Sort the shoe rack',
+      'Wipe the console table', 'Take out anything for the car', 'Clear the closet floor',
+    ],
+  },
+  laundry: {
+    5: ['Move the wash to the dryer', 'Sort one pile into darks and lights', 'Empty the lint trap'],
+    10: ['Fold what is in the dryer', 'Start a new load', 'Clear the folding surface'],
+    20: [
+      'Put away all the clean laundry', 'Wipe the machine tops', 'Sort the odd socks',
+      'Sweep the floor', 'Restock the detergent shelf', 'Empty the trash',
     ],
   },
 }

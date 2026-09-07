@@ -1,0 +1,9 @@
+# The config holds the Whop API key. Never serve it, whatever the request.
+<FilesMatch "^config(\.example)?\.php$">
+  Require all denied
+</FilesMatch>
+
+# Nothing here is cacheable.
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-store"
+</IfModule>

@@ -52,3 +52,37 @@ rather than per-repo:
 ```
 
 To update the vendored copy, re-clone upstream and replace `.claude/skills/`.
+
+
+## ADHD Life OS — deploying
+
+Build, then upload `dist/` into `public_html/`.
+
+```bash
+npm install
+npm run build          # production: the licence gate calls /api/validate.php
+npm run build:preview  # demo build with no server behind it; gate is a shape check only
+npm test               # six suites
+```
+
+### Licence validation (required before selling)
+
+The app is static and cannot hold a secret, so one small PHP endpoint holds the
+Whop API key and proxies the check. It ships in `dist/api/`.
+
+1. Upload `dist/` to `public_html/`.
+2. Copy `api/config.example.php` to `api/config.php` on the server.
+3. Put your Whop API key in it (Whop dashboard → Developer → API keys).
+
+`config.php` is gitignored and blocked by `api/.htaccess`, so the key never
+reaches the repository and is never served.
+
+Without `config.php` the endpoint answers 503, which the app reports as "the
+check couldn't run" with a retry — it never rejects anyone. That is deliberate:
+a paying customer must not be locked out by a misconfigured deploy. It also
+means **the gate is open until you add the key**, so do step 3 before launch.
+
+The endpoint calls `POST https://api.whop.com/api/v2/memberships/{key}/validate_license`
+with empty metadata. Whop uses metadata to bind a licence to a device; the spec
+rules device binding out, so there is nothing to mismatch. Verify that path
+against Whop's current API reference before launch — their v2 docs have moved.

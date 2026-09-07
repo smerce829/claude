@@ -10,6 +10,7 @@ let p
    localStorage in place would be undone by the app's own (correct) save. */
 const unlock = async () => {
   const ctx = await b.newContext({viewport:{width:375,height:667},isMobile:true,hasTouch:true})
+  await ctx.route('**/api/validate.php', r => r.fulfill({status:200,contentType:'application/json',body:'{"valid":true}'}))
   p = await ctx.newPage()
   p.on('pageerror',e=>errs.push(e.message))
   p.on('console',m=>{if(m.type()==='error')errs.push(m.text())})

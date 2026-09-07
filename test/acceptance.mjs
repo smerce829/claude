@@ -6,6 +6,7 @@ const ok=(n,c,d='')=>{ console.log(`  ${c?'PASS':'FAIL'}  ${n}${d?' — '+d:''}`
 
 // iPhone SE — the smallest realistic phone.
 const ctx = await b.newContext({ viewport:{width:375,height:667}, deviceScaleFactor:2, isMobile:true, hasTouch:true })
+await ctx.route('**/api/validate.php', r => r.fulfill({status:200,contentType:'application/json',body:'{"valid":true}'}))
 const p = await ctx.newPage()
 const errs=[]; p.on('pageerror',e=>errs.push(e.message)); p.on('console',m=>{if(m.type()==='error')errs.push(m.text())})
 
@@ -94,6 +95,7 @@ ok('no horizontal scroll at 320px', n.w<=n.iw+1, `${n.w} vs ${n.iw}`)
 
 console.log('\n=== DARK MODE ===')
 const dctx = await b.newContext({viewport:{width:375,height:667},colorScheme:'dark'})
+await dctx.route('**/api/validate.php', r => r.fulfill({status:200,contentType:'application/json',body:'{"valid":true}'}))
 const dp = await dctx.newPage(); await dp.goto(B,{waitUntil:'networkidle'})
 const bg = await dp.evaluate(()=>getComputedStyle(document.body).backgroundColor)
 ok('dark surface applied automatically', bg==='rgb(35, 35, 35)', bg)
@@ -105,6 +107,7 @@ ok('no console/page errors', errs.length===0, errs.join(' | '))
 
 console.log('\n=== REDUCED MOTION ===')
 const rctx = await b.newContext({viewport:{width:375,height:667}, reducedMotion:'reduce'})
+await rctx.route('**/api/validate.php', r => r.fulfill({status:200,contentType:'application/json',body:'{"valid":true}'}))
 const rp = await rctx.newPage(); await rp.goto(B,{waitUntil:'networkidle'})
 await rp.locator('.gate__input').fill('ABCD12-EFGH34-IJKL56')
 await rp.getByRole('button',{name:'start'}).click(); await rp.waitForTimeout(300)
