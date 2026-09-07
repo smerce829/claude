@@ -22,6 +22,7 @@ export function Gate({ onValid }: { onValid: (key: string) => void }) {
   return (
     <main className="gate">
       <div className="gate__body">
+        <p className="label">license key</p>
         <h1 className="gate__title">Paste your key</h1>
         <input
           className="gate__input"

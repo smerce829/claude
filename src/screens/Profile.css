@@ -3,18 +3,13 @@
 .prof__tile {
   min-height: var(--target);
   padding: 0 var(--s-4);
+  border: 1px solid var(--edge);
   border-radius: var(--radius);
-  border: 1px solid var(--ink-muted);
   background: transparent;
   color: var(--ink);
   font-size: var(--type-control);
   font-weight: 600;
   text-align: left;
-  transition: background-color var(--t-state) ease-out;
 }
-
-.prof__tile--selected {
-  background: var(--purple);
-  color: var(--ink-on-purple);
-  border-color: var(--purple);
-}
+.prof__tile:active { background: var(--panel); border-color: var(--ink-muted); }
+.prof__tile--selected { background: var(--cyan); color: var(--on-accent); border-color: var(--cyan); }

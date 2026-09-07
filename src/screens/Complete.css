@@ -2,10 +2,13 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: var(--s-6) var(--pad) var(--s-5);
+  padding: var(--s-7) var(--pad) var(--s-5);
   padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom));
 }
 
+/* The one hero moment. The word is set at task scale, not title scale — it
+   gets the same weight as the instruction it replaces. It cuts in rather
+   than fading: the reward is that it is over, and over is instantaneous. */
 .complete__word {
   flex: 1;
   display: flex;
@@ -13,6 +16,10 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: var(--type-title);
+  font-size: var(--type-task);
+  letter-spacing: -0.022em;
+  line-height: 1;
   color: var(--ink);
 }
+
+.complete__controls { display: flex; flex-direction: column; gap: var(--s-3); }

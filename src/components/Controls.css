@@ -9,58 +9,52 @@
   font-family: var(--font-text);
   font-size: var(--type-control);
   font-weight: 600;
+  letter-spacing: 0.01em;
   line-height: 1;
-  transition: background-color var(--t-state) ease-out;
 }
 
-.btn--primary {
-  background: var(--purple);
-  /* #000000 in light mode: #232323 on #896CFE is 4.22:1 and fails AA. */
-  color: var(--ink-on-purple);
-}
-.btn--primary:active { background: var(--purple-light); }
+/* Cyan means time is passing, so it carries the primary action too. */
+.btn--primary { background: var(--cyan); color: var(--on-accent); }
+.btn--primary:active { background: var(--cyan-press); }
 
-.btn--completion {
-  background: var(--lime);
-  color: var(--ink);
-}
-.btn--completion:active { opacity: 0.9; }
+/* The only lime in the app. */
+.btn--completion { background: var(--lime); color: var(--on-accent); }
+.btn--completion:active { opacity: 0.86; }
 
+/* Text only. It should read as available, not as a second button. */
 .btn--secondary {
   background: none;
   color: var(--ink-muted);
-  font-family: var(--font-text);
   font-size: var(--type-body);
-  font-weight: 400;
+  font-weight: 500;
   border-radius: 0;
 }
+.btn--secondary:active { color: var(--ink); }
 
+/* Choice tile. The boundary is a real 4.42:1 edge — at the old hairline
+   value the tiles were invisible in the light this app is used in. */
 .tile {
   flex: 1 1 0;
   min-width: 0;
   height: 88px;
   min-height: 88px;
   border-radius: var(--radius);
-  /* --line measures 1.26:1 on --surface: an invisible boundary in the bad
-     light this app is built for. --ink-muted is 5.08:1 and already a token. */
-  border: 1px solid var(--ink-muted);
+  border: 1px solid var(--edge);
   background: transparent;
   color: var(--ink);
   font-family: var(--font-text);
   font-size: var(--type-control);
   font-weight: 600;
-  transition: background-color var(--t-state) ease-out;
+  font-variant-numeric: tabular-nums;
 }
+/* Pressed, not selected: the control answering the finger. */
+.tile:active { background: var(--panel); border-color: var(--ink-muted); }
 
 .tile--selected {
-  background: var(--purple);
-  color: var(--ink-on-purple);
-  border-color: var(--purple);
+  background: var(--cyan);
+  color: var(--on-accent);
+  border-color: var(--cyan);
 }
+.tile--selected:active { background: var(--cyan-press); border-color: var(--cyan-press); }
 
-.divider {
-  height: 1px;
-  border: 0;
-  margin: 0;
-  background: var(--line);
-}
+.divider { height: 1px; border: 0; margin: 0; background: var(--hairline); }

@@ -10,6 +10,7 @@
   font-size: var(--type-body);
   color: var(--ink);
   text-align: left;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--hairline);
 }
-.set__item:first-child { border-top: 1px solid var(--line); }
+.set__item:first-child { border-top: 1px solid var(--hairline); }
+.set__item:active { color: var(--cyan); }

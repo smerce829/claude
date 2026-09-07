@@ -5,14 +5,15 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  min-height: var(--target);
+  min-height: 72px;
   padding: var(--s-4) 0;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--type-title);
+  letter-spacing: -0.015em;
   color: var(--ink);
   text-align: left;
-  /* Hierarchy from a hairline, never a card edge. */
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--hairline);
 }
-.menu__item:first-child { border-top: 1px solid var(--line); }
+.menu__item:first-child { border-top: 1px solid var(--hairline); }
+.menu__item:active { color: var(--cyan); }

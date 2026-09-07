@@ -12,12 +12,14 @@ export function Complete(
   return (
     <main className="complete">
       <p className="complete__word">done</p>
-      <CompletionButton onClick={onAgain}>go again</CompletionButton>
+      <div className="complete__controls">
+        <CompletionButton onClick={onAgain}>go again</CompletionButton>
       {/* Uses the secondary-action slot, not a lime element — this screen is
           the only place lime appears and it belongs to "go again". */}
-      {nudgeBackup && onBackup && (
-        <SecondaryAction onClick={onBackup}>back up your data</SecondaryAction>
-      )}
+        {nudgeBackup && onBackup && (
+          <SecondaryAction onClick={onBackup}>back up your data</SecondaryAction>
+        )}
+      </div>
     </main>
   )
 }

@@ -1,7 +1,12 @@
 .pd__cycle {
   margin: 0;
-  font-size: var(--type-small);
+  font-family: var(--font-text);
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .pd__hint { margin: 0; font-size: var(--type-small); color: var(--ink-muted); }
@@ -14,41 +19,13 @@
   gap: var(--s-2);
   width: 100%;
   min-height: var(--target);
-  padding: var(--s-3) 0;
+  padding: var(--s-2) 0;
   font-size: var(--type-body);
   color: var(--ink);
-  /* Dividers instead of card edges. */
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--hairline);
 }
-.pd__bill:first-child { border-top: 1px solid var(--line); }
+.pd__bill:first-child { border-top: 1px solid var(--hairline); }
 
-.pd__name { flex: 1; min-width: 0; overflow-wrap: break-word; }
-.pd__bill--paid .pd__name { color: var(--ink-muted); }
-
-.pd__box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  flex: none;
-  /* Ink or ink-muted only. Never coloured. */
-  color: var(--ink);
-}
-
-.pd__suggest { display: flex; flex-wrap: wrap; gap: var(--s-2); }
-
-.pd__chip {
-  min-height: var(--target);
-  padding: 0 var(--s-4);
-  border-radius: var(--radius);
-  border: 1px solid var(--ink-muted);
-  background: transparent;
-  color: var(--ink);
-  font-size: var(--type-body);
-}
-
-/* The row is two controls: tick it off, or take it off the list. */
 .pd__tick {
   display: flex;
   align-items: center;
@@ -61,6 +38,23 @@
   color: inherit;
 }
 
+.pd__name { flex: 1; min-width: 0; overflow-wrap: break-word; }
+.pd__bill--paid .pd__name { color: var(--ink-muted); }
+
+/* Unchecked reads as an open slot, not an empty box. */
+.pd__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  color: var(--on-accent);
+}
+.pd__bill--paid .pd__box { background: var(--cyan); border-color: var(--cyan); }
+
 .pd__remove {
   display: flex;
   align-items: center;
@@ -70,6 +64,20 @@
   flex: none;
   color: var(--ink-muted);
 }
+.pd__remove:active { color: var(--danger); }
+
+.pd__suggest { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.pd__chip {
+  min-height: 48px;
+  padding: 0 var(--s-4);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--type-small);
+  font-weight: 600;
+}
+.pd__chip:active { border-color: var(--cyan); color: var(--cyan); }
 
 .pd__freq { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
-.pd__freq .tile { height: 72px; min-height: 72px; }
+.pd__freq .tile { height: 72px; min-height: 72px; font-size: var(--type-body); }

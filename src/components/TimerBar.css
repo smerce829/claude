@@ -3,18 +3,54 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 6px;
+  /* 9px bar at its thickest, then the scale marks below it. Fixed height so
+     the thickening at the end never shifts anything. */
+  height: 12px;
   border-radius: 0;
-  background: transparent;
   z-index: 10;
+  pointer-events: none;
+}
+
+/* The spent portion stays visible, so the fill reads as a proportion of the
+   whole rather than an unanchored length. */
+.timerbar__track {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: var(--track);
+  transition: height var(--t-screen) var(--ease-out);
 }
 
 .timerbar__fill {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
-  height: 100%;
-  background: var(--purple);
-  border-radius: 0;
-  /* Depletes from the left edge. */
+  height: 6px;
+  background: var(--cyan);
   transform-origin: left center;
-  will-change: transform;
+  /* No transition on the transform: the rAF loop already supplies every
+     intermediate value, and a transition on top of it fights the loop. */
+  transition: height var(--t-screen) var(--ease-out),
+              background-color var(--t-state) var(--ease-out);
 }
+
+/* Quarter marks sit under the gauge, the way a scale does — they never cut
+   the bar, so it stays one continuous quantity. */
+.timerbar__ticks { position: absolute; inset: 0; }
+.timerbar__ticks span {
+  position: absolute;
+  bottom: 0;
+  width: 1px;
+  height: 3px;
+  background: var(--edge);
+}
+
+/* The last tenth: the bar thickens. Not a colour change, not a pulse, not a
+   glow — a physical change caught peripherally while the eyes are on the room. */
+.timerbar--ending .timerbar__track,
+.timerbar--ending .timerbar__fill { height: 9px; }
+
+/* Finished. Cyan is gone by now, so the two accents never share a screen. */
+.timerbar--done .timerbar__track,
+.timerbar--done .timerbar__fill { height: 9px; }
+.timerbar--done .timerbar__fill { background: var(--lime); }

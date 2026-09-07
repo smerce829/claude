@@ -34,7 +34,7 @@ const css = await p.evaluate(() => [...document.styleSheets]
 for (const [name, re] of [['gradient', /gradient/i], ['backdrop blur', /backdrop-filter/i], ['box-shadow', /box-shadow/i]])
   ok(`no ${name} in shipped CSS`, !re.test(css))
 const bodyBg = await p.evaluate(() => getComputedStyle(document.body).backgroundColor)
-ok('light surface by default', bodyBg === 'rgb(255, 255, 255)', bodyBg)
+ok('navy ground', bodyBg === 'rgb(10, 16, 23)', bodyBg)
 const font = await p.evaluate(() => getComputedStyle(document.querySelector('.tile')).fontFamily)
 ok('League Spartan on controls', /League Spartan/.test(font), font)
 ok('no bottom dock', (await p.locator('.dock').count()) === 0)
@@ -49,7 +49,12 @@ ok('bar present', await p.locator('.timerbar').isVisible())
 ok('no ring element', (await p.locator('.ring').count()) === 0)
 ok('no digits on screen', !/\d+:\d{2}/.test(await p.locator('main').innerText()))
 const box = await p.locator('.timerbar').boundingBox()
-ok('6px, pinned to the top edge', box.height === 6 && box.y === 0, `h=${box.height} y=${box.y}`)
+ok('gauge pinned to the top edge', box.y === 0, `y=${box.y}`)
+const fillH = await p.locator('.timerbar__fill').evaluate(e => e.getBoundingClientRect().height)
+ok('6px bar, not a ring', fillH === 6, `${fillH}px`)
+// Control boundaries must clear 3:1; the old hairline measured 1.26:1.
+const edge = await p.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--edge').trim())
+ok('interactive edges use the 4.42:1 token', edge === '#5E7D97', edge)
 
 console.log('\n=== §7.5 BRAIN-DUMP TAKES PRIORITY OVER THE LIBRARY ===')
 await fresh({

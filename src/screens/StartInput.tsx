@@ -36,7 +36,7 @@ export function StartInput(
   return (
     <main className="start">
       <div className="start__group">
-        <h1 className="start__label">energy</h1>
+        <p className="label">energy</p>
         <div className="start__row" role="group" aria-label="energy">
           {ENERGY.map((o) => (
             <ChoiceTile key={o.v} label={o.label} selected={energy === o.v}
@@ -46,7 +46,7 @@ export function StartInput(
       </div>
 
       <div className="start__group">
-        <h1 className="start__label">time</h1>
+        <p className="label">time</p>
         <div className="start__row" role="group" aria-label="time">
           {TIME.map((o) => (
             <ChoiceTile key={o.v} label={o.label} selected={time === o.v}

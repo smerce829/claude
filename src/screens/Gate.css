@@ -2,17 +2,18 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: var(--s-6) var(--pad) var(--s-5);
+  padding: var(--s-7) var(--pad) var(--s-5);
   padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom));
 }
 
-.gate__body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: var(--s-4); }
+.gate__body { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: var(--s-3); }
 
 .gate__title {
-  margin: 0;
+  margin: 0 0 var(--s-2);
   font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--type-title);
+  letter-spacing: -0.015em;
   color: var(--ink);
 }
 
@@ -20,12 +21,17 @@
   width: 100%;
   height: var(--target);
   padding: 0 var(--s-4);
-  border: none;
+  border: 1px solid var(--edge);
   border-radius: var(--radius);
-  background: var(--surface-sunk);
+  background: var(--panel);
   color: var(--ink);
+  /* The key is a code. Set it like one: spaced, tabular, uppercase. */
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
-.gate__input:focus { outline: 2px solid var(--purple-light); outline-offset: 0; }
+.gate__input::placeholder { color: var(--ink-muted); text-transform: none; letter-spacing: 0; }
+.gate__input:focus { outline: none; border-color: var(--cyan); }
 
 .gate__error {
   margin: 0;

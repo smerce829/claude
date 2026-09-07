@@ -1,33 +1,15 @@
 .install {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 0; right: 0; bottom: 0;
+  z-index: 40;
   display: flex;
   flex-direction: column;
-  gap: var(--s-2);
+  gap: var(--s-3);
   padding: var(--s-5) var(--pad);
   padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom));
-  background: var(--surface);
-  /* Hierarchy from a hairline, never a shadow. */
-  border-top: 1px solid var(--line);
+  background: var(--base);
+  border-top: 1px solid var(--edge);
 }
-
-.install__text {
-  margin: 0;
-  font-size: var(--type-body);
-  color: var(--ink);
-}
-
-.install__note {
-  margin: 0;
-  font-size: var(--type-small);
-  color: var(--ink-muted);
-}
-
-/* Ink only, never coloured, and sitting on the text baseline. */
-.install__glyph {
-  display: inline-block;
-  vertical-align: -4px;
-  color: var(--ink);
-}
+.install__text { margin: 0; font-size: var(--type-body); color: var(--ink); }
+.install__note { margin: 0; font-size: var(--type-small); color: var(--ink-muted); }
+.install__glyph { display: inline-block; vertical-align: -4px; color: var(--ink); }

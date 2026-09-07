@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { InstallPrompt } from './components/InstallPrompt'
+import { TimerBar } from './components/TimerBar'
 import { SecondaryAction } from './components/Controls'
 import { BrainDump, BrainDumpSort } from './screens/BrainDump'
 import { Complete } from './screens/Complete'
@@ -243,7 +244,7 @@ export function App() {
         <TaskScreen task={task} fraction={fraction} onDone={onDone} onSwap={onSwap} />
       )}
 
-      {screen === 'complete' && <Complete onAgain={onAgain} nudgeBackup={nudgeBackup} onBackup={takeBackup} />}
+      {screen === 'complete' && <><TimerBar fraction={1} finished /><Complete onAgain={onAgain} nudgeBackup={nudgeBackup} onBackup={takeBackup} /></>}
 
       {screen === 'menu' && (
         <Menu onGo={(s) => setScreen(s)} onBack={toStart} />
@@ -255,7 +256,7 @@ export function App() {
         <TaskScreen task={set[step]} fraction={fraction} onDone={nextInSet} />
       )}
 
-      {screen === 'room-done' && <Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} />}
+      {screen === 'room-done' && <><TimerBar fraction={1} finished /><Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} /></>}
 
       {screen === 'doompile' && (
         <DoomPileName
@@ -304,7 +305,7 @@ export function App() {
         />
       )}
 
-      {screen === 'doompile-done' && <Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} />}
+      {screen === 'doompile-done' && <><TimerBar fraction={1} finished /><Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} /></>}
 
       {screen === 'payday' && (
         <Payday
@@ -366,7 +367,7 @@ export function App() {
         />
       )}
 
-      {screen === 'braindump-done' && <Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} />}
+      {screen === 'braindump-done' && <><TimerBar fraction={1} finished /><Complete onAgain={toStart} nudgeBackup={nudgeBackup} onBackup={takeBackup} /></>}
 
       {screen === 'settings' && (
         <Settings
